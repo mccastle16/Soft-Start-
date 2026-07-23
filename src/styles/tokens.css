@@ -1,0 +1,57 @@
+/* ============================================================
+   SOFT FOCUS v1.0 — design tokens
+   Source: docs/style-guide.html, with the two amendments approved
+   in CLAUDE.md: --bg lightened to #FCFAF9, --font-script added.
+   ============================================================ */
+:root {
+  /* Color — warm, rose-led, never alarming */
+  --bg:            #FCFAF9;  /* porcelain — warm neutral canvas (amended) */
+  --surface:       #FFFFFF;  /* cards */
+  --surface-blush: #F9EDEE;  /* nested surfaces, hover fills */
+  --surface-deep:  #F3E2E4;  /* pressed / selected fills */
+  --accent:        #C97489;  /* rose — primary actions (AA on white) */
+  --accent-strong: #B25F76;  /* hover / active rose */
+  --accent-soft:   #EFC3CC;  /* progress fills, decorative */
+  --text:          #453A3E;  /* rose-brown ink, never pure black */
+  --text-muted:    #8B7B80;  /* secondary text (AA on bg + surface) */
+  --line:          #EFE4E2;  /* hairlines, only where needed */
+  --ok:            #6F9678;  /* sage — completion, growth */
+  --ok-soft:       #E4EFE6;
+  --note:          #C08A52;  /* apricot — gentle attention, not alarm */
+  --note-soft:     #F8ECDF;
+  --focus:         #B25F76;  /* focus ring */
+
+  /* Type */
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "Nunito Sans", system-ui, sans-serif;
+  --font-script: "Ephesis", cursive; /* amended — wordmark, day-of-week heading, greeting only */
+  --fs-xs: 0.8125rem;  /* 13 — captions, tags */
+  --fs-sm: 0.9375rem;  /* 15 — secondary text */
+  --fs-md: 1.0625rem;  /* 17 — body */
+  --fs-lg: 1.375rem;   /* 22 — card titles */
+  --fs-xl: 1.75rem;    /* 28 — section titles */
+  --fs-2xl: 2.375rem;  /* 38 — page titles */
+
+  /* Spacing — 4px base */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+
+  /* Radius — generous, friendly */
+  --r-sm: 10px;   /* inputs, tags-with-corners */
+  --r-md: 16px;   /* buttons, small cards */
+  --r-lg: 24px;   /* cards, panels */
+  --r-pill: 999px;
+
+  /* Shadows — rose-tinted, layered, soft. No borders for depth. */
+  --shadow-rest:  0 1px 2px rgba(69,58,62,.04), 0 4px 16px rgba(178,95,118,.07);
+  --shadow-lift:  0 2px 4px rgba(69,58,62,.05), 0 10px 28px rgba(178,95,118,.12);
+  --shadow-inner: inset 0 1px 3px rgba(69,58,62,.06);
+
+  /* Motion — calm by default */
+  --ease: cubic-bezier(.25,.6,.3,1);
+  --t-fast: 160ms; --t-med: 260ms; --t-slow: 420ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; }
+}

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Focus — UI Style Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   DESIGN TOKENS — the entire system lives in these variables
+   ============================================================ */
+:root {
+  /* Color — warm, rose-led, never alarming */
+  --bg:            #FAF6F4;  /* porcelain — warm neutral canvas */
+  --surface:       #FFFFFF;  /* cards */
+  --surface-blush: #F9EDEE;  /* nested surfaces, hover fills */
+  --surface-deep:  #F3E2E4;  /* pressed / selected fills */
+  --accent:        #C97489;  /* rose — primary actions (AA on white) */
+  --accent-strong: #B25F76;  /* hover / active rose */
+  --accent-soft:   #EFC3CC;  /* progress fills, decorative */
+  --text:          #453A3E;  /* rose-brown ink, never pure black */
+  --text-muted:    #8B7B80;  /* secondary text (AA on bg + surface) */
+  --line:          #EFE4E2;  /* hairlines, only where needed */
+  --ok:            #6F9678;  /* sage — completion, growth */
+  --ok-soft:       #E4EFE6;
+  --note:          #C08A52;  /* apricot — gentle attention, not alarm */
+  --note-soft:     #F8ECDF;
+  --focus:         #B25F76;  /* focus ring */
+
+  /* Type */
+  --font-display: "Outfit", system-ui, sans-serif;
+  --font-body: "Nunito Sans", system-ui, sans-serif;
+  --fs-xs: 0.8125rem;  /* 13 — captions, tags */
+  --fs-sm: 0.9375rem;  /* 15 — secondary text */
+  --fs-md: 1.0625rem;  /* 17 — body */
+  --fs-lg: 1.375rem;   /* 22 — card titles */
+  --fs-xl: 1.75rem;    /* 28 — section titles */
+  --fs-2xl: 2.375rem;  /* 38 — page titles */
+
+  /* Spacing — 4px base */
+  --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+  --sp-5: 24px; --sp-6: 32px; --sp-7: 48px; --sp-8: 64px;
+
+  /* Radius — generous, friendly */
+  --r-sm: 10px;   /* inputs, tags-with-corners */
+  --r-md: 16px;   /* buttons, small cards */
+  --r-lg: 24px;   /* cards, panels */
+  --r-pill: 999px;
+
+  /* Shadows — rose-tinted, layered, soft. No borders for depth. */
+  --shadow-rest:  0 1px 2px rgba(69,58,62,.04), 0 4px 16px rgba(178,95,118,.07);
+  --shadow-lift:  0 2px 4px rgba(69,58,62,.05), 0 10px 28px rgba(178,95,118,.12);
+  --shadow-inner: inset 0 1px 3px rgba(69,58,62,.06);
+
+  /* Motion — calm by default */
+  --ease: cubic-bezier(.25,.6,.3,1);
+  --t-fast: 160ms; --t-med: 260ms; --t-slow: 420ms;
+}
+
+/* ============================================================ */
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--fs-md);
+  line-height: 1.65;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+h1,h2,h3 { font-family: var(--font-display); line-height:1.2; font-weight:600; letter-spacing:-0.01em; }
+h1 { font-size: var(--fs-2xl); }
+h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-2); }
+h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-2); }
+p.lede { color: var(--text-muted); max-width: 62ch; }
+code, .token { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.8em; background: var(--surface-blush); padding: 2px 7px; border-radius: 6px; color: var(--accent-strong); }
+
+.wrap { max-width: 1040px; margin: 0 auto; padding: var(--sp-7) var(--sp-5) var(--sp-8); }
+section { margin-bottom: var(--sp-8); }
+.section-head { margin-bottom: var(--sp-5); }
+.eyebrow { font-family: var(--font-display); font-size: var(--fs-xs); font-weight:600; letter-spacing:.08em; text-transform: uppercase; color: var(--accent); margin-bottom: var(--sp-1); }
+
+/* Hero */
+.hero { padding: var(--sp-8) 0 var(--sp-7); }
+.hero h1 { max-width: 16ch; margin: var(--sp-3) 0; }
+.hero .lede { font-size: var(--fs-md); }
+.hero-chips { display:flex; flex-wrap:wrap; gap: var(--sp-2); margin-top: var(--sp-5); }
+
+/* Cards */
+.card {
+  background: var(--surface);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-rest);
+  padding: var(--sp-5);
+}
+.card.interactive { transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease); cursor: pointer; }
+.card.interactive:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.card.nested { background: var(--surface-blush); box-shadow: none; border-radius: var(--r-md); padding: var(--sp-4); }
+.grid { display:grid; gap: var(--sp-4); }
+.grid.c2 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.grid.c3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+.grid.c4 { grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+
+/* Color swatches */
+.swatch { border-radius: var(--r-md); overflow:hidden; box-shadow: var(--shadow-rest); background: var(--surface); }
+.swatch .chip { height: 84px; }
+.swatch .meta { padding: var(--sp-3) var(--sp-4); }
+.swatch .meta strong { display:block; font-family: var(--font-display); font-weight:600; font-size: var(--fs-sm); }
+.swatch .meta span { font-size: var(--fs-xs); color: var(--text-muted); }
+
+/* Type specimens */
+.spec { display:flex; align-items: baseline; gap: var(--sp-4); padding: var(--sp-3) 0; border-bottom: 1px solid var(--line); }
+.spec:last-child { border-bottom: none; }
+.spec .label { flex: 0 0 150px; font-size: var(--fs-xs); color: var(--text-muted); }
+
+/* Spacing + radius demos */
+.bar { background: var(--accent-soft); border-radius: 6px; height: 22px; }
+.radius-demo { background: var(--surface-blush); display:flex; align-items:center; justify-content:center; height: 90px; font-size: var(--fs-xs); color: var(--text-muted); }
+
+/* Buttons */
+.btn {
+  font-family: var(--font-display);
+  font-size: var(--fs-sm); font-weight: 600;
+  border: none; cursor: pointer;
+  padding: 12px 22px; min-height: 44px;
+  border-radius: var(--r-md);
+  transition: background var(--t-fast) var(--ease), box-shadow var(--t-med) var(--ease), transform var(--t-fast) var(--ease);
+}
+.btn:focus-visible, .tag-btn:focus-visible, .input:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 2px;
+}
+.btn:active { transform: scale(.98); }
+.btn-primary { background: var(--accent); color: #fff; box-shadow: var(--shadow-rest); }
+.btn-primary:hover { background: var(--accent-strong); box-shadow: var(--shadow-lift); }
+.btn-secondary { background: var(--surface-blush); color: var(--accent-strong); }
+.btn-secondary:hover { background: var(--surface-deep); }
+.btn-ghost { background: transparent; color: var(--text-muted); }
+.btn-ghost:hover { background: var(--surface-blush); color: var(--text); }
+.btn-pill { border-radius: var(--r-pill); }
+.btn-row { display:flex; flex-wrap:wrap; gap: var(--sp-3); align-items:center; }
+
+/* Tags */
+.tag {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size: var(--fs-xs); font-weight:600;
+  padding: 5px 13px; border-radius: var(--r-pill);
+  background: var(--surface-blush); color: var(--accent-strong);
+}
+.tag.ok { background: var(--ok-soft); color: #4C7156; }
+.tag.note { background: var(--note-soft); color: #9A6C3B; }
+.tag.quiet { background: var(--bg); color: var(--text-muted); }
+.dot { width:7px; height:7px; border-radius:50%; background: currentColor; }
+
+/* Inputs */
+.input {
+  font-family: var(--font-body); font-size: var(--fs-sm);
+  width:100%; max-width: 380px;
+  padding: 12px 16px; min-height: 44px;
+  border: 1.5px solid var(--line); border-radius: var(--r-md);
+  background: var(--surface); color: var(--text);
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+.input::placeholder { color: var(--text-muted); }
+.input:hover { border-color: var(--accent-soft); }
+.input:focus { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(201,116,137,.12); outline:none; }
+
+/* Signature: gentle progress */
+.progress-track { height: 10px; border-radius: var(--r-pill); background: var(--surface-blush); overflow:hidden; }
+.progress-fill {
+  height:100%; border-radius: var(--r-pill);
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+  transition: width var(--t-slow) var(--ease);
+}
+.ring { width: 92px; height: 92px; }
+.ring circle { fill:none; stroke-width: 9; stroke-linecap: round; }
+.ring .track { stroke: var(--surface-blush); }
+.ring .fill { stroke: url(#roseGrad); transform: rotate(-90deg); transform-origin: 50% 50%; }
+.progress-row { display:flex; gap: var(--sp-5); align-items:center; flex-wrap:wrap; }
+.copy-pair { display:grid; gap: var(--sp-3); }
+.copy-pair .no { text-decoration: line-through; color: var(--text-muted); }
+.copy-pair .yes { font-weight: 700; }
+
+/* Icons */
+.icon-row { display:flex; gap: var(--sp-4); flex-wrap:wrap; }
+.icon-tile { width:56px; height:56px; border-radius: var(--r-md); background: var(--surface-blush); display:flex; align-items:center; justify-content:center; color: var(--accent-strong); }
+.icon-tile svg { width:24px; height:24px; stroke-width: 1.75; }
+
+/* Illustration demo */
+.illus {
+  height: 150px; border-radius: var(--r-lg);
+  background:
+    radial-gradient(120px 90px at 20% 80%, rgba(201,116,137,.35), transparent 70%),
+    radial-gradient(160px 110px at 75% 30%, rgba(239,195,204,.6), transparent 70%),
+    radial-gradient(100px 80px at 55% 90%, rgba(111,150,120,.18), transparent 70%),
+    linear-gradient(160deg, #FDF7F5, #F7E9EB);
+}
+
+/* Motion demo */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition-duration: 1ms !important; }
+}
+
+/* Tables */
+table { width:100%; border-collapse: collapse; font-size: var(--fs-sm); }
+th { text-align:left; font-family: var(--font-display); font-weight:600; font-size: var(--fs-xs); color: var(--text-muted); padding: var(--sp-2) var(--sp-3); border-bottom: 1px solid var(--line); }
+td { padding: var(--sp-3); border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+@media (max-width: 640px) {
+  .wrap { padding: var(--sp-5) var(--sp-4) var(--sp-7); }
+  .spec { flex-direction: column; gap: 2px; }
+  .spec .label { flex-basis: auto; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="hero">
+  <p class="eyebrow">Design system</p>
+  <h1>Soft Focus</h1>
+  <p class="lede">A calm, rose-toned system for interfaces that encourage rather than pressure. Every token below exists to make progress feel gentle: warm neutrals instead of stark white, soft depth instead of hard lines, and language that celebrates what's done — never what's missing.</p>
+  <div class="hero-chips">
+    <span class="tag"><span class="dot"></span>Cozy</span>
+    <span class="tag ok"><span class="dot"></span>Encouraging</span>
+    <span class="tag quiet"><span class="dot"></span>Never urgent</span>
+  </div>
+</header>
+
+<!-- PRINCIPLES -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">01 — Foundations</p>
+    <h2>Principles</h2>
+    <p class="lede">Three rules resolve every design debate before it starts.</p>
+  </div>
+  <div class="grid c3">
+    <div class="card">
+      <h3>Soft over sharp</h3>
+      <p style="font-size:var(--fs-sm); color:var(--text-muted)">Depth comes from tinted shadows and layered surfaces, never from borders or outlines. Corners are generous everywhere.</p>
+    </div>
+    <div class="card">
+      <h3>Calm over urgent</h3>
+      <p style="font-size:var(--fs-sm); color:var(--text-muted)">No reds, no badges shouting counts, no countdown timers. Attention is drawn with warmth (apricot), not alarm.</p>
+    </div>
+    <div class="card">
+      <h3>Done over due</h3>
+      <p style="font-size:var(--fs-sm); color:var(--text-muted)">Progress always shows what the user has accomplished. Empty states invite; they never scold. Streaks pause — they don't break.</p>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">02 — Color</p>
+    <h2>Palette</h2>
+    <p class="lede">Rose-led with warm neutrals. Text is a rose-brown ink (<code>#453A3E</code>) rather than black — softer on the eye, still 10.9:1 contrast on the canvas. There is deliberately no red: "attention" is apricot, and completion is sage.</p>
+  </div>
+  <div class="grid c4">
+    <div class="swatch"><div class="chip" style="background:#FAF6F4"></div><div class="meta"><strong>Porcelain</strong><span>--bg · #FAF6F4 · canvas</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#FFFFFF"></div><div class="meta"><strong>Surface</strong><span>--surface · #FFFFFF · cards</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#F9EDEE"></div><div class="meta"><strong>Blush</strong><span>--surface-blush · #F9EDEE · nested fills</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#EFC3CC"></div><div class="meta"><strong>Petal</strong><span>--accent-soft · #EFC3CC · decorative</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#C97489"></div><div class="meta"><strong>Rose</strong><span>--accent · #C97489 · primary actions</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#B25F76"></div><div class="meta"><strong>Deep rose</strong><span>--accent-strong · #B25F76 · hover, links</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#453A3E"></div><div class="meta"><strong>Ink</strong><span>--text · #453A3E · primary text</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#8B7B80"></div><div class="meta"><strong>Dust</strong><span>--text-muted · #8B7B80 · secondary text</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#6F9678"></div><div class="meta"><strong>Sage</strong><span>--ok · #6F9678 · completion</span></div></div>
+    <div class="swatch"><div class="chip" style="background:#C08A52"></div><div class="meta"><strong>Apricot</strong><span>--note · #C08A52 · gentle attention</span></div></div>
+  </div>
+  <div class="card nested" style="margin-top:var(--sp-4)">
+    <strong style="font-family:var(--font-display); font-size:var(--fs-sm)">Usage ratio</strong>
+    <p style="font-size:var(--fs-sm); color:var(--text-muted)">Roughly 70% neutrals (porcelain + surface), 20% blush tones, 10% rose accent. Sage and apricot appear only as small tags, dots, and fills — never as large areas.</p>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">03 — Typography</p>
+    <h2>Type</h2>
+    <p class="lede"><strong>Outfit</strong> (display) brings soft geometry to titles and buttons; <strong>Nunito Sans</strong> (body) is round, warm, and effortless at paragraph sizes. Numbers in data views use <code>font-variant-numeric: tabular-nums</code> so metrics align without feeling rigid.</p>
+  </div>
+  <div class="card">
+    <div class="spec"><span class="label">Page title · 38/600</span><span style="font-family:var(--font-display); font-size:var(--fs-2xl); font-weight:600; letter-spacing:-0.01em">Good morning, Grace</span></div>
+    <div class="spec"><span class="label">Section · 28/600</span><span style="font-family:var(--font-display); font-size:var(--fs-xl); font-weight:600">Your week so far</span></div>
+    <div class="spec"><span class="label">Card title · 22/600</span><span style="font-family:var(--font-display); font-size:var(--fs-lg); font-weight:600">Morning routine</span></div>
+    <div class="spec"><span class="label">Body · 17/400 · 1.65</span><span>Small consistent steps create meaningful change over time.</span></div>
+    <div class="spec"><span class="label">Secondary · 15/400</span><span style="font-size:var(--fs-sm); color:var(--text-muted)">Last visit · 12 days ago</span></div>
+    <div class="spec"><span class="label">Caption · 13/600</span><span style="font-size:var(--fs-xs); font-weight:600; color:var(--text-muted); letter-spacing:.04em">THIS WEEK</span></div>
+  </div>
+</section>
+
+<!-- SPACING -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">04 — Spacing</p>
+    <h2>Spacing scale</h2>
+    <p class="lede">A 4px base with a deliberately airy top end. Cards get 24px internal padding minimum; sections breathe with 48–64px. When in doubt, add space — density reads as pressure.</p>
+  </div>
+  <div class="card">
+    <div style="display:grid; gap:var(--sp-3)">
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-1 · 4px</code><div class="bar" style="width:4px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-2 · 8px</code><div class="bar" style="width:8px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-3 · 12px</code><div class="bar" style="width:12px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-4 · 16px</code><div class="bar" style="width:16px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-5 · 24px</code><div class="bar" style="width:24px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-6 · 32px</code><div class="bar" style="width:32px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-7 · 48px</code><div class="bar" style="width:48px"></div></div>
+      <div style="display:flex; align-items:center; gap:var(--sp-4)"><code style="width:110px">--sp-8 · 64px</code><div class="bar" style="width:64px"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- RADIUS + SHADOW -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">05 — Radius &amp; depth</p>
+    <h2>Corners and shadows</h2>
+    <p class="lede">Radii scale with element size — never one value everywhere. Shadows are rose-tinted (shadow color <code>#B25F76</code> at low alpha) so depth feels warm instead of gray, and they replace borders entirely.</p>
+  </div>
+  <div class="grid c4" style="margin-bottom:var(--sp-4)">
+    <div class="radius-demo" style="border-radius:var(--r-sm)">--r-sm · 10px<br>inputs, chips</div>
+    <div class="radius-demo" style="border-radius:var(--r-md)">--r-md · 16px<br>buttons</div>
+    <div class="radius-demo" style="border-radius:var(--r-lg)">--r-lg · 24px<br>cards</div>
+    <div class="radius-demo" style="border-radius:var(--r-pill)">--r-pill<br>tags, progress</div>
+  </div>
+  <div class="grid c2">
+    <div class="card"><h3 style="font-size:var(--fs-sm)">Rest</h3><p style="font-size:var(--fs-xs); color:var(--text-muted)"><code>--shadow-rest</code> — a tight 1px contact shadow plus a wide, faint rose bloom.</p></div>
+    <div class="card" style="box-shadow:var(--shadow-lift)"><h3 style="font-size:var(--fs-sm)">Lifted</h3><p style="font-size:var(--fs-xs); color:var(--text-muted)"><code>--shadow-lift</code> — used on hover with a 2px rise. Elevation is the hover language; color changes are secondary.</p></div>
+  </div>
+</section>
+
+<!-- BUTTONS -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">06 — Buttons</p>
+    <h2>Buttons</h2>
+    <p class="lede">Three weights, one shape family. Labels say exactly what happens — "Save changes", not "Submit". Minimum touch target 44px. One primary button per view.</p>
+  </div>
+  <div class="card">
+    <div class="btn-row" style="margin-bottom:var(--sp-4)">
+      <button class="btn btn-primary">Save changes</button>
+      <button class="btn btn-secondary">Add a note</button>
+      <button class="btn btn-ghost">Maybe later</button>
+      <button class="btn btn-primary btn-pill">Start session</button>
+    </div>
+    <table>
+      <tr><th>Variant</th><th>Use for</th><th>Rule</th></tr>
+      <tr><td><strong>Primary</strong> (rose fill)</td><td>The one main action</td><td>Never more than one visible at a time</td></tr>
+      <tr><td><strong>Secondary</strong> (blush fill)</td><td>Supporting actions</td><td>Sits beside primary, never competes</td></tr>
+      <tr><td><strong>Ghost</strong></td><td>Dismissals, "later" paths</td><td>Skipping is always a quiet, guilt-free option</td></tr>
+      <tr><td><strong>Pill</strong></td><td>Starting something pleasant</td><td>Reserved for begin/play moments</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- CARDS -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">07 — Cards</p>
+    <h2>Cards</h2>
+    <p class="lede">The core container. White on porcelain, 24px radius, 24px padding, resting shadow. Nesting uses blush fills without shadows — depth stacks by tint, not by shadow-on-shadow.</p>
+  </div>
+  <div class="grid c2">
+    <div class="card interactive">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-3)">
+        <h3 style="margin:0">Today's plan</h3>
+        <span class="tag ok"><span class="dot"></span>2 done</span>
+      </div>
+      <div class="card nested" style="margin-bottom:var(--sp-2)">
+        <strong style="font-size:var(--fs-sm)">Morning meditation</strong>
+        <div style="font-size:var(--fs-xs); color:var(--text-muted)">8 min · Focus</div>
+      </div>
+      <div class="card nested">
+        <strong style="font-size:var(--fs-sm)">Gratitude journal</strong>
+        <div style="font-size:var(--fs-xs); color:var(--text-muted)">5 min · Reflect</div>
+      </div>
+      <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-3)">Interactive card — hover to see the lift.</p>
+    </div>
+    <div class="card">
+      <h3>Anatomy</h3>
+      <table>
+        <tr><td>Padding</td><td><code>--sp-5</code> (24px), <code>--sp-4</code> for nested</td></tr>
+        <tr><td>Radius</td><td><code>--r-lg</code> outer, <code>--r-md</code> nested</td></tr>
+        <tr><td>Depth</td><td>Shadow on white cards only; nested cards use blush tint</td></tr>
+        <tr><td>Hover</td><td>−2px translate + <code>--shadow-lift</code>, 260ms</td></tr>
+        <tr><td>Borders</td><td>None. Hairlines (<code>--line</code>) only inside tables/lists</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- TAGS + INPUTS -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">08 — Tags &amp; inputs</p>
+    <h2>Tags, badges, and fields</h2>
+    <p class="lede">Tags are always pills with tinted fills. Counts and statuses use calm wording — a tag says <em>"2 rescheduled"</em>, never <em>"2 overdue!"</em>. Inputs are quiet at rest and glow softly on focus.</p>
+  </div>
+  <div class="card">
+    <div class="btn-row" style="margin-bottom:var(--sp-5)">
+      <span class="tag"><span class="dot"></span>Skin treatment</span>
+      <span class="tag ok"><span class="dot"></span>Completed</span>
+      <span class="tag note"><span class="dot"></span>Rescheduled</span>
+      <span class="tag quiet">Optional</span>
+    </div>
+    <label for="demo-input" style="display:block; font-family:var(--font-display); font-weight:600; font-size:var(--fs-sm); margin-bottom:var(--sp-2)">Search treatments</label>
+    <input id="demo-input" class="input" type="text" placeholder="Try 'facial' or 'massage'…">
+    <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-3)">Focus state: rose border + 4px soft halo. Error state reuses apricot with helpful copy ("Add a date so we can save this") — never bare red text.</p>
+  </div>
+</section>
+
+<!-- ICONS + ILLUSTRATION -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">09 — Icons &amp; illustration</p>
+    <h2>Icons and illustration</h2>
+    <p class="lede">Icons: rounded-terminal line icons (Lucide or similar) at 1.75px stroke, 24px grid, sitting in blush tiles when used as category anchors. Illustrations: soft radial color fields — dawn light, not clipart. No hard outlines, no faces, no literal metaphors.</p>
+  </div>
+  <div class="grid c2">
+    <div class="card">
+      <div class="icon-row">
+        <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c.9 3.4 3.6 6.1 7 7-3.4.9-6.1 3.6-7 7-.9-3.4-3.6-6.1-7-7 3.4-.9 6.1-3.6 7-7z"/></svg></div>
+        <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M19.1 4.9L17 7M7 17l-2.1 2.1"/></svg></div>
+        <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.6-9.5-9C.7 8.6 2.6 5 6 5c2 0 3.3 1 4 2.2C10.7 6 12 5 14 5c3.4 0 5.3 3.6 3.5 7-2.5 4.4-9.5 9-9.5 9z" transform="translate(1.5,0)"/></svg></div>
+        <div class="icon-tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4-2 7-6 7-11V6l-7-3-7 3v5c0 5 3 9 7 11z"/></svg></div>
+      </div>
+      <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-4)">1.75px stroke, round caps, blush tiles at <code>--r-md</code>. One icon per card header maximum — icons anchor, they don't decorate.</p>
+    </div>
+    <div class="card">
+      <div class="illus"></div>
+      <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-4)">Illustration style: layered radial gradients in petal, rose, and a whisper of sage on porcelain. Use for headers, empty states, and session screens.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE: GENTLE PROGRESS -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">10 — Signature</p>
+    <h2>Gentle progress</h2>
+    <p class="lede">The system's one signature idea: progress is always additive. Fills grow from petal to rose like light warming; nothing drains, flashes, or counts down. The copy rules below are design tokens as much as any hex value.</p>
+  </div>
+  <div class="card">
+    <div class="progress-row" style="margin-bottom:var(--sp-5)">
+      <svg class="ring" viewBox="0 0 92 92" role="img" aria-label="3 of 5 steps complete">
+        <defs><linearGradient id="roseGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#EFC3CC"/><stop offset="100%" stop-color="#C97489"/></linearGradient></defs>
+        <circle class="track" cx="46" cy="46" r="38"/>
+        <circle class="fill" cx="46" cy="46" r="38" stroke-dasharray="238.8" stroke-dashoffset="95.5"/>
+        <text x="46" y="51" text-anchor="middle" font-family="Outfit" font-weight="600" font-size="19" fill="#453A3E">3/5</text>
+      </svg>
+      <div style="flex:1; min-width:220px">
+        <div style="display:flex; justify-content:space-between; font-size:var(--fs-sm); margin-bottom:var(--sp-2)"><strong>This week</strong><span style="color:var(--text-muted)">3 of 5 sessions</span></div>
+        <div class="progress-track"><div class="progress-fill" style="width:60%"></div></div>
+        <p style="font-size:var(--fs-xs); color:var(--text-muted); margin-top:var(--sp-2)">You've shown up 3 times this week — that's real momentum.</p>
+      </div>
+    </div>
+    <h3 style="font-size:var(--fs-sm)">Copy rules — done over due</h3>
+    <div class="copy-pair" style="margin-top:var(--sp-3)">
+      <div><span class="no">2 tasks overdue</span> → <span class="yes">2 of 4 done — pick up whenever you're ready</span></div>
+      <div><span class="no">You broke your streak</span> → <span class="yes">Your streak is resting. It'll be here tomorrow.</span></div>
+      <div><span class="no">You missed yesterday</span> → <span class="yes">Welcome back 🌿 Today counts.</span></div>
+      <div><span class="no">Only 12% complete</span> → <span class="yes">You've started — the first step is done</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANIMATION -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">11 — Motion</p>
+    <h2>Animation</h2>
+    <p class="lede">Motion is calm and singular: one orchestrated moment per screen (usually the progress fill or a soft page-load fade), plus quiet hover micro-interactions. Nothing bounces, pulses, or loops.</p>
+  </div>
+  <div class="card">
+    <table>
+      <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+      <tr><td><code>--t-fast</code></td><td>160ms</td><td>Color/background changes, presses</td></tr>
+      <tr><td><code>--t-med</code></td><td>260ms</td><td>Hover lifts, shadow transitions</td></tr>
+      <tr><td><code>--t-slow</code></td><td>420ms</td><td>Progress fills, panel reveals</td></tr>
+      <tr><td><code>--ease</code></td><td>cubic-bezier(.25,.6,.3,1)</td><td>Everything — a soft decelerating glide</td></tr>
+    </table>
+    <p style="font-size:var(--fs-sm); color:var(--text-muted); margin-top:var(--sp-4)">Rules: transforms and opacity only (no layout animation); hover = −2px lift + shadow soften; press = scale(.98); all motion collapses under <code>prefers-reduced-motion</code>. Never animate to demand attention — no shaking fields, no pulsing badges.</p>
+  </div>
+</section>
+
+<!-- ACCESSIBILITY -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">12 — Accessibility</p>
+    <h2>Accessibility</h2>
+    <p class="lede">Calm and accessible are the same goal: predictable, legible, unhurried.</p>
+  </div>
+  <div class="card">
+    <table>
+      <tr><th>Area</th><th>Standard</th></tr>
+      <tr><td>Contrast</td><td>Ink on porcelain 10.9:1 · Dust on white 4.6:1 · Rose #C97489 is decorative/large-text only; text links use Deep rose #B25F76 (4.5:1+)</td></tr>
+      <tr><td>Focus</td><td>2px deep-rose outline, 2px offset, on every interactive element — never removed</td></tr>
+      <tr><td>Targets</td><td>44×44px minimum for all touch targets</td></tr>
+      <tr><td>Color independence</td><td>Status tags pair color with a dot + label; progress rings carry <code>aria-label</code> text</td></tr>
+      <tr><td>Motion</td><td><code>prefers-reduced-motion</code> collapses all transitions to ~1ms</td></tr>
+      <tr><td>Type</td><td>Body 17px/1.65 minimum; no justified text; line length capped at ~62ch</td></tr>
+      <tr><td>Timing</td><td>No auto-dismissing content the user must read; no time pressure anywhere</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- COMPONENT GUIDELINES -->
+<section>
+  <div class="section-head">
+    <p class="eyebrow">13 — Guidelines</p>
+    <h2>Component guidelines</h2>
+    <p class="lede">Quick-reference rules for building new screens without drifting from the system.</p>
+  </div>
+  <div class="grid c2">
+    <div class="card">
+      <h3 style="font-size:var(--fs-md)">Do</h3>
+      <ul style="font-size:var(--fs-sm); color:var(--text-muted); padding-left:1.2em; display:grid; gap:var(--sp-2)">
+        <li>Derive every color, size, and duration from the tokens</li>
+        <li>Use whitespace before adding dividers; dividers before borders; borders never for depth</li>
+        <li>Give every list an inviting empty state ("Nothing planned yet — add something small")</li>
+        <li>Keep one primary action and one signature moment per screen</li>
+        <li>Write buttons as verbs and outcomes in sentence case</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="font-size:var(--fs-md)">Don't</h3>
+      <ul style="font-size:var(--fs-sm); color:var(--text-muted); padding-left:1.2em; display:grid; gap:var(--sp-2)">
+        <li>Use red, exclamation marks, or countdowns anywhere</li>
+        <li>Show negative counts ("3 missed") — always frame as progress made</li>
+        <li>Stack shadows on nested cards — nest with blush tints instead</li>
+        <li>Add icons or emoji to every header — one anchor icon maximum</li>
+        <li>Animate more than one orchestrated moment per screen</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer style="color:var(--text-muted); font-size:var(--fs-xs); padding-top:var(--sp-5); border-top:1px solid var(--line)">
+  Soft Focus · v1.0 · All values in this document are live CSS custom properties — copy the <code>:root</code> block from source as your starting stylesheet.
+</footer>
+
+</div>
+</body>
+</html>

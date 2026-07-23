@@ -1,0 +1,41 @@
+flowchart TD
+    subgraph FIRSTRUN["First run — once, resumable"]
+        S01["S0.1 Welcome"] --> S02["S0.2 Day shape<br/>8am · 9am · lunch 12:30–1:30 · 5pm"]
+        S02 --> S03["S0.3 Anchors<br/>(Tue/Thu 10am)"]
+        S03 --> S04["S0.4 Build Monday<br/>(template editor)"]
+        S04 --> S05["S0.5 Duplicate to Tue–Fri"]
+        S05 --> S06["S0.6 Weekends note ·<br/>backup offer · done"]
+    end
+
+    subgraph RITUAL["Morning arrival — once per fresh day"]
+        R1["R1 Greeting animation<br/>'Good morning' + quote ·<br/>~4–6s · tap to skip"] --> R2I["R2 Intention screen<br/>answer floats up & docks ·<br/>'Maybe later' → no intention"]
+    end
+
+    S06 --> RITUAL
+    R2I --> S1
+    S1 --> SFN["'Start from now'<br/>(always available, any hour)"]
+    SFN --> R3a["Day-length pop-up<br/>+ end-time picker"] --> ENGINE
+
+    subgraph TABS["Tab bar: Today · Week · Rhythm"]
+        S1["S1 TODAY (home)<br/>proportional timeline ·<br/>persistent + · progress ring ·<br/>intention · now marker"]
+        S2["S2 WEEK<br/>7 days · past = sage only ·<br/>+ on every day ·<br/>weekend 'Add something'"]
+        S3["S3 RHYTHM<br/>Mon–Fri templates ·<br/>Sat/Sun stay blank"]
+    end
+
+    S1 --- S2
+    S2 --- S3
+
+    S1 --> SH1["SH1 Block sheet<br/>Done · Move to tomorrow ·<br/>Rest today · edit times"]
+    S1 --> SH2["SH2 Add sheet<br/>one-off by default ·<br/>'Also add to my weekly rhythm'"]
+    S1 --> SH3["SH3 Shift my day<br/>(mid-day re-flow)"]
+    SH3 --> ENGINE["RE-FLOW ENGINE (shared)<br/>anchored: holds ·<br/>protected: slides + compresses, never drops ·<br/>flexible: slides + compresses + may overflow"]
+    ENGINE -.->|overflow| SH4["SH4 Didn't-fit sheet<br/>per flexible block: Move / Rest<br/>(protected blocks never here)"]
+    S2 --> SH5["SH5 Day peek"]
+    S2 --> SH2
+    S3 --> S31["S3.1 Weekday template editor"]
+    S3 --> S32["S3.2 Day shape settings"]
+    S3 --> S33["S3.3 Data & backup<br/>(JSON export / import)"]
+
+    S1 -.-> N1["N1 Overlap nudge (apricot)"]
+    S1 -.-> N2["N2 Boundary question<br/>'Extend your day to ___?'"]
+    S3 -.-> N3["N3 Backup whisper"]

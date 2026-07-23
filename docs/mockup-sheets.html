@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Start — Mockup · Sheets (SH1 + SH2)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Ephesis&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FCFAF9; --surface:#FFFFFF; --surface-blush:#F9EDEE; --surface-deep:#F3E2E4;
+  --accent:#C97489; --accent-strong:#B25F76; --accent-soft:#EFC3CC;
+  --text:#453A3E; --text-muted:#8B7B80; --line:#EFE4E2;
+  --ok:#6F9678; --ok-soft:#E4EFE6; --note:#C08A52; --note-soft:#F8ECDF;
+  --font-display:"Outfit",system-ui,sans-serif; --font-body:"Nunito Sans",system-ui,sans-serif;
+  --font-script:"Ephesis",cursive;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --shadow-rest:0 1px 2px rgba(69,58,62,.04),0 4px 16px rgba(178,95,118,.07);
+  --shadow-lift:0 2px 4px rgba(69,58,62,.05),0 10px 28px rgba(178,95,118,.12);
+  --ease:cubic-bezier(.25,.6,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:#EFE7E4;color:var(--text);-webkit-font-smoothing:antialiased;
+     display:flex;flex-wrap:wrap;gap:44px;justify-content:center;align-items:flex-start;padding:56px 24px}
+.unit{width:390px}
+.side{max-width:330px;font-size:14px;line-height:1.6;color:var(--text-muted);padding-top:12px}
+.side h1{font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--text);letter-spacing:-.01em;margin-bottom:6px}
+.side .eyebrow{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.side p{margin-bottom:14px}
+.side b{color:var(--text)}
+.cap{font-size:13px;color:#7d726f;margin:12px 4px 0;line-height:1.55}
+.cap b{color:#453A3E}
+
+.phone{width:390px;background:var(--bg);border-radius:44px;box-shadow:0 24px 70px rgba(69,58,62,.22),0 0 0 10px #3d3437;overflow:hidden}
+.screen{height:844px;display:flex;flex-direction:column;position:relative;padding:22px 20px 0}
+
+/* dimmed Today backdrop (simplified) */
+.wordmark{font-family:var(--font-script);font-size:30px;color:var(--accent-strong);text-align:center;line-height:1}
+.bd .quote{font-family:var(--font-display);font-size:12px;color:var(--text-muted);text-align:center}
+.bd h2{font-family:var(--font-script);font-size:40px;line-height:.9;margin-top:12px}
+.miniblock{border-radius:var(--r-md);padding:9px 13px;background:var(--surface);box-shadow:var(--shadow-rest);margin-bottom:8px}
+.miniblock.soft{background:var(--surface-blush);box-shadow:none}
+.miniblock .bt{font-family:var(--font-display);font-weight:600;font-size:14.5px}
+.miniblock .bs{font-size:11.5px;color:var(--text-muted)}
+.scrim{position:absolute;inset:0;background:rgba(69,58,62,.28);backdrop-filter:blur(1.5px)}
+
+/* sheet */
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-radius:28px 28px 0 0;
+  box-shadow:0 -10px 40px rgba(178,95,118,.18);padding:14px 24px 34px}
+.handle{width:38px;height:4.5px;border-radius:3px;background:var(--surface-deep);margin:0 auto 16px}
+.sh-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.sh-title{font-family:var(--font-display);font-weight:600;font-size:21px;letter-spacing:-.01em}
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-display);font-size:10.5px;font-weight:600;
+  padding:3px 10px;border-radius:var(--r-pill)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.tag.spanish{background:var(--note-soft);color:#9A6C3B}
+
+.timerow{display:flex;align-items:center;justify-content:space-between;background:var(--surface-blush);
+  border-radius:var(--r-md);padding:13px 16px;margin:14px 0 18px;cursor:pointer;
+  transition:background .16s var(--ease)}
+.timerow:hover{background:var(--surface-deep)}
+.timerow .t{font-family:var(--font-display);font-weight:600;font-size:15px}
+.timerow .hint{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px}
+.timerow svg{width:15px;height:15px;stroke-width:1.75}
+
+.btn{font-family:var(--font-display);font-weight:600;border:none;cursor:pointer;min-height:48px;
+  border-radius:var(--r-md);transition:background .16s var(--ease),box-shadow .26s var(--ease),transform .16s var(--ease)}
+.btn:active{transform:scale(.98)}
+.btn-done{width:100%;font-size:15.5px;background:var(--accent);color:#fff;box-shadow:var(--shadow-rest);padding:14px}
+.btn-done:hover{background:var(--accent-strong);box-shadow:var(--shadow-lift)}
+.pair{display:flex;gap:10px;margin-top:10px}
+.btn-sec{flex:1;font-size:13.5px;background:var(--surface-blush);color:var(--accent-strong);padding:13px 8px}
+.btn-sec:hover{background:var(--surface-deep)}
+.btn-ghost{display:block;margin:12px auto 0;font-size:13px;font-weight:500;color:var(--text-muted);
+  background:none;padding:9px 16px;min-height:auto;border-radius:var(--r-sm)}
+.btn-ghost:hover{background:var(--surface-blush);color:var(--text)}
+
+/* SH2 specifics */
+.fld{width:100%;font-family:var(--font-body);font-size:15px;padding:14px 16px;margin:12px 0 4px;
+  border:1.5px solid var(--line);border-radius:var(--r-md);background:var(--surface);color:var(--text);
+  transition:border-color .16s var(--ease),box-shadow .16s var(--ease)}
+.fld::placeholder{color:#C4B6BA}
+.fld:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px rgba(201,116,137,.12)}
+.cats{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.cat{font-family:var(--font-display);font-size:12px;font-weight:600;padding:8px 15px;border-radius:var(--r-pill);
+  background:var(--surface-blush);color:var(--text-muted);cursor:pointer;border:1.5px solid transparent;
+  display:inline-flex;align-items:center;gap:6px;transition:all .16s var(--ease)}
+.cat:hover{background:var(--surface-deep)}
+.cat.sel{background:var(--accent);color:#fff;box-shadow:var(--shadow-rest)}
+.togglerow{display:flex;align-items:center;justify-content:space-between;padding:13px 2px;margin-top:6px}
+.togglerow .lbl{font-size:13.5px;color:var(--text-muted)}
+.toggle{width:44px;height:26px;border-radius:99px;background:var(--surface-deep);position:relative;cursor:pointer;
+  transition:background .16s var(--ease);flex:none}
+.toggle::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 3px rgba(69,58,62,.15);transition:left .16s var(--ease)}
+.toggle.on{background:var(--accent)}
+.toggle.on::after{left:21px}
+@media (prefers-reduced-motion: reduce){*{transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+
+<div class="side">
+  <p class="eyebrow">Soft Start · Visual pass 03</p>
+  <h1>Sheets — SH1 + SH2</h1>
+  <p>Sheets rise over a gently dimmed, softly blurred Today — the day stays visible behind everything you do to it. Warm-ink scrim (never gray-black), 28px top corners, a rose-tinted upward shadow.</p>
+  <p><b>SH1 hierarchy is the product philosophy in button form:</b> Done is the one rose action; Move/Rest sit beneath as equal blush twins; Edit block is a ghost. The time row is the blush shortcut — tap it to retime inline.</p>
+  <p><b>SH2:</b> title field → category pills (selected = rose fill) → time row defaulting to the next open gap → the rhythm toggle, quiet and off by default. Permanence is a deliberate flick, never an accident.</p>
+</div>
+
+<!-- SH1 Block sheet -->
+<div class="unit">
+  <div class="phone"><div class="screen">
+    <div class="bd" style="opacity:.9">
+      <div class="wordmark">Soft Start</div>
+      <div class="quote">Every day counts.</div>
+      <h2>Tuesday</h2>
+      <div style="margin-top:14px">
+        <div class="miniblock soft"><div class="bt">Lunch</div><div class="bs">12:30 – 1:30</div></div>
+        <div class="miniblock"><div class="bt">Spanish</div><div class="bs">1:30 – 2:15</div></div>
+        <div class="miniblock"><div class="bt">Side project</div><div class="bs">2:20 – 4:00</div></div>
+      </div>
+    </div>
+    <div class="scrim"></div>
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="sh-head">
+        <span class="sh-title">Spanish</span>
+        <span class="tag spanish"><span class="dot"></span>Spanish</span>
+      </div>
+      <div class="timerow">
+        <span class="t">1:30 PM &nbsp;–&nbsp; 2:15 PM</span>
+        <span class="hint">tap to change
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <button class="btn btn-done">Done</button>
+      <div class="pair">
+        <button class="btn btn-sec">Move to tomorrow</button>
+        <button class="btn btn-sec">Rest today</button>
+      </div>
+      <button class="btn btn-ghost">Edit block · title, category, tier</button>
+    </div>
+  </div></div>
+  <p class="cap"><b>SH1 — Block sheet.</b> Tap any block. One rose action, two blush equals, one ghost. One-off blocks add a quiet “Also add to my weekly rhythm” row above the ghost.</p>
+</div>
+
+<!-- SH2 Add sheet -->
+<div class="unit">
+  <div class="phone"><div class="screen">
+    <div class="bd" style="opacity:.9">
+      <div class="wordmark">Soft Start</div>
+      <div class="quote">Every day counts.</div>
+      <h2>Tuesday</h2>
+      <div style="margin-top:14px">
+        <div class="miniblock soft"><div class="bt">Lunch</div><div class="bs">12:30 – 1:30</div></div>
+        <div class="miniblock"><div class="bt">Spanish</div><div class="bs">1:30 – 2:15</div></div>
+      </div>
+    </div>
+    <div class="scrim"></div>
+    <div class="sheet">
+      <div class="handle"></div>
+      <div class="sh-head"><span class="sh-title">Add something</span></div>
+      <input class="fld" type="text" placeholder="What are we adding?">
+      <div class="cats">
+        <span class="cat">Ease-in</span>
+        <span class="cat">Work</span>
+        <span class="cat sel">Side project</span>
+        <span class="cat">Spanish</span>
+        <span class="cat">Workout</span>
+        <span class="cat">Life</span>
+        <span class="cat">Other</span>
+      </div>
+      <div class="timerow" style="margin:12px 0 4px">
+        <span class="t">2:20 PM &nbsp;–&nbsp; 3:20 PM</span>
+        <span class="hint">next open gap
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+        </span>
+      </div>
+      <div class="togglerow">
+        <span class="lbl">Also add to my weekly rhythm</span>
+        <span class="toggle"></span>
+      </div>
+      <button class="btn btn-done">Add to today</button>
+    </div>
+  </div></div>
+  <p class="cap"><b>SH2 — Add sheet.</b> From any “+”. One-off by default; the rhythm toggle is the sole, deliberate path to permanence. Same sheet serves other days from Week (“Add to Thursday”).</p>
+</div>
+
+</body>
+</html>

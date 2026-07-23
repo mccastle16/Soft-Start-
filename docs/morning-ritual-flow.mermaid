@@ -1,0 +1,15 @@
+flowchart TD
+    A["Open app — fresh day<br/>(after 4:00am boundary)"] --> B["R1 greeting animation<br/>'Good morning' + quote<br/>('Every day counts.')<br/>~4–6s · tap to skip<br/>gap variant: 'Welcome back — today counts'"]
+    B --> C["Float & fade:<br/>greeting fades out,<br/>quote docks at top of screen"]
+    C --> R2I["R2 Intention screen (full)<br/>one question · one line ·<br/>ghost 'Maybe later'"]
+    R2I -- "Submit" --> R2F["Answer floats up,<br/>docks beneath the quote"] --> D
+    R2I -- "'Maybe later'" --> D["TODAY — plan ready,<br/>fully editable<br/>(no intention line if skipped)"]
+    D --> F{"'Start from now'?<br/>(always available, any hour)"}
+    F -- "yes" --> G{"Day-length POP-UP:<br/>keep usual end<br/>or pick a later time?"}
+    G -- "Keep usual end" --> I["Re-flow Engine:<br/>anchors hold · protected floor ·<br/>flexible slide + compress<br/>(to per-block minimums)"]
+    G -- "Pick a later time" --> H["End-time picker"] --> I
+    I --> J{"Everything fit?"}
+    J -- "No" --> K["Didn't-fit sheet (SH4):<br/>per flexible block Move / Rest"] --> L
+    J -- "Yes" --> L["Full-screen editable preview<br/>'Here's a real plan<br/>for the day you have'"]
+    L -- "Apply" --> D
+    L -- "Leave it as is" --> D

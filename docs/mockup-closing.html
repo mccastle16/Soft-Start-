@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Start — Mockup · Rhythm & Closing States</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Ephesis&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FCFAF9; --surface:#FFFFFF; --surface-blush:#F9EDEE; --surface-deep:#F3E2E4;
+  --accent:#C97489; --accent-strong:#B25F76; --accent-soft:#EFC3CC;
+  --text:#453A3E; --text-muted:#8B7B80; --line:#EFE4E2;
+  --ok:#6F9678; --ok-soft:#E4EFE6;
+  --font-display:"Outfit",system-ui,sans-serif; --font-body:"Nunito Sans",system-ui,sans-serif;
+  --font-script:"Ephesis",cursive;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --shadow-rest:0 1px 2px rgba(69,58,62,.04),0 4px 16px rgba(178,95,118,.07);
+  --shadow-lift:0 2px 4px rgba(69,58,62,.05),0 10px 28px rgba(178,95,118,.12);
+  --ease:cubic-bezier(.25,.6,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:#EFE7E4;color:var(--text);-webkit-font-smoothing:antialiased;
+     display:flex;flex-wrap:wrap;gap:44px;justify-content:center;align-items:flex-start;padding:56px 24px}
+.unit{width:390px}
+.side{max-width:330px;font-size:14px;line-height:1.6;color:var(--text-muted);padding-top:12px}
+.side h1{font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--text);margin-bottom:6px}
+.side .eyebrow{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.side p{margin-bottom:14px}
+.side b{color:var(--text)}
+.cap{font-size:13px;color:#7d726f;margin:12px 4px 0;line-height:1.55}
+.cap b{color:#453A3E}
+
+.phone{width:390px;background:var(--bg);border-radius:44px;box-shadow:0 24px 70px rgba(69,58,62,.22),0 0 0 10px #3d3437;overflow:hidden}
+.screen{height:844px;display:flex;flex-direction:column;position:relative;padding:22px 20px 0}
+.wordmark{font-family:var(--font-script);font-size:30px;color:var(--accent-strong);text-align:center;line-height:1}
+.quote{font-family:var(--font-display);font-size:12px;font-weight:500;color:var(--text-muted);text-align:center;letter-spacing:.04em}
+.dayname{font-family:var(--font-script);font-size:40px;line-height:.9;margin:12px 0 2px}
+.h2{font-family:var(--font-display);font-weight:600;font-size:23px;letter-spacing:-.01em;margin:12px 0 2px}
+
+.eyebrow2{font-family:var(--font-display);font-size:10.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--accent);margin:16px 0 8px}
+.setrow{display:flex;align-items:center;justify-content:space-between;background:var(--surface);
+  border-radius:var(--r-md);box-shadow:var(--shadow-rest);padding:14px 16px;margin-bottom:9px;cursor:pointer;
+  transition:box-shadow .26s var(--ease)}
+.setrow:hover{box-shadow:var(--shadow-lift)}
+.setrow .lbl{font-family:var(--font-display);font-weight:600;font-size:14.5px}
+.setrow .hint{font-size:12px;color:var(--text-muted);display:flex;align-items:center;gap:5px}
+.setrow svg{width:15px;height:15px;stroke-width:1.75}
+.setrow.blank{background:var(--surface-blush);box-shadow:none}
+.setrow.blank .lbl{color:var(--text-muted);font-weight:500}
+
+.tabs{margin:auto -20px 0;background:var(--surface);box-shadow:0 -4px 20px rgba(178,95,118,.08);
+  display:flex;padding:10px 26px 26px;border-radius:28px 28px 0 0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B8A9AD;
+  font-family:var(--font-display);font-size:10.5px;font-weight:600;padding:6px 0}
+.tab svg{width:22px;height:22px;stroke-width:1.75}
+.tab.on{color:var(--accent-strong)}
+.tab.on .pillbg{background:var(--surface-blush);border-radius:var(--r-pill);padding:4px 18px;margin:-4px -18px 0}
+
+/* evening */
+.donecard{display:flex;align-items:center;gap:11px;background:var(--surface);border-radius:var(--r-md);
+  box-shadow:var(--shadow-rest);padding:13px 15px;margin-bottom:9px}
+.donecard .t{font-family:var(--font-display);font-weight:600;font-size:14.5px;color:#A79B9E}
+.check{width:24px;height:24px;border-radius:50%;background:var(--ok-soft);color:#4C7156;flex:none;
+  display:flex;align-items:center;justify-content:center}
+.check svg{width:13px;height:13px;stroke-width:2.5}
+.warmline{font-size:14px;color:var(--text-muted);text-align:center;margin-top:18px;line-height:1.6}
+.donecard.slim{padding:9px 13px;margin-bottom:7px}
+.donecard.slim .t{font-size:13.5px}
+.donecard.slim .check{width:21px;height:21px}
+.ring104{position:relative;width:104px;height:104px;margin:16px auto 0}
+.ring104 svg{transform:rotate(-90deg)}
+.ring104 circle{fill:none;stroke-width:9;stroke-linecap:round}
+.ring104 .t{stroke:var(--surface-blush)}
+.ring104 .f{stroke:url(#roseg);stroke-dasharray:282.7;stroke-dashoffset:0;animation:fill104 1.6s var(--ease) .3s both}
+@keyframes fill104{from{stroke-dashoffset:282.7}}
+.ring104 .n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:600;font-size:21px}
+.celebsmall{font-family:var(--font-display);font-weight:600;font-size:16.5px;text-align:center;letter-spacing:-.01em;margin-top:12px;line-height:1.4}
+.showedup{font-family:var(--font-display);font-weight:600;font-size:21px;text-align:center;letter-spacing:-.01em;margin:20px 0 18px;line-height:1.35}
+
+/* celebration */
+.bigringwrap{position:relative;width:150px;height:150px;margin:0 auto}
+.bigringwrap svg{transform:rotate(-90deg)}
+.bigringwrap circle{fill:none;stroke-width:11;stroke-linecap:round}
+.bigringwrap .t{stroke:var(--surface-blush)}
+.bigringwrap .f{stroke:url(#roseg);stroke-dasharray:414.7;stroke-dashoffset:0;animation:bigfill 1.6s var(--ease) .2s both}
+@keyframes bigfill{from{stroke-dashoffset:414.7}}
+.bigringwrap .n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:600;font-size:28px}
+.celebline{font-family:var(--font-display);font-weight:600;font-size:24px;text-align:center;letter-spacing:-.01em;line-height:1.35;margin-top:24px}
+.petal{position:absolute;top:-24px;border-radius:50% 50% 50% 0;opacity:.85;animation:fall linear both}
+@keyframes fall{to{transform:translateY(900px) rotate(340deg);opacity:0}}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition-duration:1ms!important}
+  .bigringwrap .f{stroke-dashoffset:0}}
+</style>
+</head>
+<body>
+
+<div class="side">
+  <p class="eyebrow">Soft Start · Visual pass 07 — final</p>
+  <h1>Rhythm & the Closing States</h1>
+  <p><b>Rhythm</b> reuses the settings-row pattern from first-run: weekday rows with block counts, weekend rows resting in blush ("blank by default"), then Day shape and Data &amp; backup.</p>
+  <p><b>Evening</b> shows only what happened — titles already quieted to gray, sage checks doing the only sage in the app — and always closes on the warm line.</p>
+  <p><b>The celebration lives inside the evening state</b> — not a separate screen, and no ring animation. On a 100% day the same sheet simply says <b>"Wow! What a day!"</b> below the warm line — the only exclamation mark in the entire app, spent on pure joy — while rose petals drift down from the top of the screen. Reduced-motion: the line alone.</p>
+</div>
+
+<!-- S3 Rhythm -->
+<div class="unit">
+  <div class="phone"><div class="screen">
+    <div class="wordmark">Soft Start</div>
+    <div class="h2">Rhythm</div>
+    <div class="eyebrow2">Weekday templates</div>
+    <div class="setrow"><span class="lbl">Monday</span><span class="hint">6 blocks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow"><span class="lbl">Tuesday</span><span class="hint">7 blocks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow"><span class="lbl">Wednesday</span><span class="hint">6 blocks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow"><span class="lbl">Thursday</span><span class="hint">7 blocks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow"><span class="lbl">Friday</span><span class="hint">5 blocks <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow blank"><span class="lbl">Saturday</span><span class="hint">blank by default <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow blank"><span class="lbl">Sunday</span><span class="hint">blank by default <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="eyebrow2">Settings</div>
+    <div class="setrow"><span class="lbl">Day shape</span><span class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <div class="setrow"><span class="lbl">Data &amp; backup</span><span class="hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></span></div>
+    <nav class="tabs">
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg><span>Today</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="4"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span>Week</span></div>
+      <div class="tab on"><div class="pillbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 15c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 21c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3" transform="translate(0,-2)"/></svg></div><span>Rhythm</span></div>
+    </nav>
+  </div></div>
+  <p class="cap"><b>S3 — Rhythm.</b> Weekday rows → template editor (the S1 timeline in edit mode); weekend rows rest in blush until she chooses to fill one. Template edits apply from tomorrow.</p>
+</div>
+
+<!-- Evening -->
+<div class="unit">
+  <div class="phone"><div class="screen">
+    <div class="wordmark">Soft Start</div>
+    <div class="quote">Every day counts.</div>
+    <div class="dayname">Tuesday</div>
+    <div class="showedup">You showed up for<br>4 things today</div>
+    <div class="donecard"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Ease in</span></div>
+    <div class="donecard"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Team meeting</span></div>
+    <div class="donecard"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Spanish</span></div>
+    <div class="donecard"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Client work</span></div>
+    <div class="warmline">That's real.<br>Tomorrow is ready when you are.</div>
+    <nav class="tabs">
+      <div class="tab on"><div class="pillbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg></div><span>Today</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="4"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span>Week</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 15c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 21c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3" transform="translate(0,-2)"/></svg><span>Rhythm</span></div>
+    </nav>
+  </div></div>
+  <p class="cap"><b>Evening state.</b> Only what happened — titles quieted, sage checks the only sage in the app — and it always ends on the warm line. A zero-done day swaps the headline for "Rest is part of the rhythm."</p>
+</div>
+
+<!-- Complete day = evening state, celebrating -->
+<div class="unit">
+  <div class="phone"><div class="screen">
+    <svg width="0" height="0"><defs><linearGradient id="roseg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#EFC3CC"/><stop offset="100%" stop-color="#C97489"/>
+    </linearGradient></defs></svg>
+    <div class="petal" style="left:8%;width:11px;height:11px;background:#EFC3CC;animation-duration:5.2s;animation-delay:.2s"></div>
+    <div class="petal" style="left:19%;width:8px;height:8px;background:#F6E3E7;animation-duration:6s;animation-delay:1.1s"></div>
+    <div class="petal" style="left:31%;width:10px;height:10px;background:#C97489;animation-duration:5.6s;animation-delay:.6s"></div>
+    <div class="petal" style="left:44%;width:9px;height:9px;background:#F2E0D2;animation-duration:6.4s;animation-delay:1.5s"></div>
+    <div class="petal" style="left:57%;width:12px;height:12px;background:#EFC3CC;animation-duration:5s;animation-delay:.9s"></div>
+    <div class="petal" style="left:68%;width:8px;height:8px;background:#E2A5B6;animation-duration:6.2s;animation-delay:.3s"></div>
+    <div class="petal" style="left:79%;width:10px;height:10px;background:#F6E3E7;animation-duration:5.4s;animation-delay:1.8s"></div>
+    <div class="petal" style="left:90%;width:9px;height:9px;background:#F2E0D2;animation-duration:5.8s;animation-delay:.7s"></div>
+    <div class="wordmark">Soft Start</div>
+    <div class="quote">Every day counts.</div>
+    <div class="dayname">Tuesday</div>
+    <div class="showedup" style="margin:12px 0 12px">You showed up for<br>8 things today</div>
+    <div class="donecard slim"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Ease in</span></div>
+    <div class="donecard slim"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Deep work</span></div>
+    <div class="donecard slim"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Team meeting</span></div>
+    <div class="donecard slim"><span class="check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></span><span class="t">Client work · Lunch · Spanish · Side project · Workout</span></div>
+    <div class="warmline" style="margin-top:12px">That's real. Tomorrow is ready when you are.</div>
+    <div class="celebline" style="margin-top:26px">Wow!<br>What a day.</div>
+    <div style="flex:1"></div>
+    <nav class="tabs">
+      <div class="tab on"><div class="pillbg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg></div><span>Today</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="4"/><path d="M8 3v4M16 3v4M4 10h16"/></svg><span>Week</span></div>
+      <div class="tab"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 15c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 21c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3" transform="translate(0,-2)"/></svg><span>Rhythm</span></div>
+    </nav>
+  </div></div>
+  <p class="cap"><b>Complete day — the evening state, celebrating.</b> Same sheet, one addition: "Wow! What a day." below the warm line, with rose petals falling from the top of the screen. No ring, no counter — just words and petals. Once per day, then quiet.</p>
+</div>
+
+</body>
+</html>

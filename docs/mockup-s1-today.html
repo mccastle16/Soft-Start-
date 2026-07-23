@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soft Start — Mockup · S1 Today</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Nunito+Sans:opsz,wght@6..12,400;6..12,600;6..12,700&family=Ephesis&display=swap" rel="stylesheet">
+<style>
+/* ============ Soft Focus v1.0 tokens ============ */
+:root{
+  --bg:#FCFAF9; --surface:#FFFFFF; --surface-blush:#F9EDEE; --surface-deep:#F3E2E4;
+  --accent:#C97489; --accent-strong:#B25F76; --accent-soft:#EFC3CC;
+  --text:#453A3E; --text-muted:#8B7B80; --line:#EFE4E2;
+  --ok:#6F9678; --ok-soft:#E4EFE6; --note:#C08A52; --note-soft:#F8ECDF;
+  --font-display:"Outfit",system-ui,sans-serif; --font-body:"Nunito Sans",system-ui,sans-serif;
+  --font-script:"Ephesis",cursive;
+  --r-sm:10px; --r-md:16px; --r-lg:24px; --r-pill:999px;
+  --shadow-rest:0 1px 2px rgba(69,58,62,.04),0 4px 16px rgba(178,95,118,.07);
+  --shadow-lift:0 2px 4px rgba(69,58,62,.05),0 10px 28px rgba(178,95,118,.12);
+  --ease:cubic-bezier(.25,.6,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--font-body);background:#EFE7E4;color:var(--text);-webkit-font-smoothing:antialiased;
+     display:flex;flex-wrap:wrap;gap:48px;justify-content:center;align-items:flex-start;padding:56px 24px}
+
+/* presentation page */
+.side{max-width:330px;font-size:14px;line-height:1.6;color:var(--text-muted);padding-top:12px}
+.side h1{font-family:var(--font-display);font-weight:600;font-size:22px;color:var(--text);letter-spacing:-.01em;margin-bottom:6px}
+.side .eyebrow{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.side p{margin-bottom:14px}
+.side b{color:var(--text)}
+
+/* phone */
+.phone{width:390px;background:var(--bg);border-radius:44px;box-shadow:0 24px 70px rgba(69,58,62,.22), 0 0 0 10px #3d3437;overflow:hidden;flex:none}
+.screen{padding:22px 20px 0;display:flex;flex-direction:column;height:844px;position:relative}
+
+/* top stack */
+.wordmark{font-family:var(--font-script);font-size:30px;color:var(--accent-strong);text-align:center;line-height:1;margin-bottom:2px}
+.quote{font-family:var(--font-display);font-size:12px;font-weight:500;letter-spacing:.04em;color:var(--text-muted);text-align:center}
+.intention{font-size:13px;font-style:italic;color:var(--text-muted);text-align:center;margin-top:3px}
+.intention b{color:var(--accent-strong);font-weight:600;font-style:italic}
+
+.hdr{display:flex;align-items:center;justify-content:space-between;margin:14px 0 4px}
+.hdr h2{font-family:var(--font-script);font-weight:400;font-size:40px;line-height:.9;color:var(--text)}
+.hdr .sub{font-family:var(--font-display);font-size:12.5px;font-weight:500;color:var(--text-muted);margin-top:3px;letter-spacing:.03em}
+.hdr-actions{display:flex;align-items:center;gap:12px}
+.iconbtn{width:42px;height:42px;border-radius:50%;background:var(--surface-blush);border:none;color:var(--accent-strong);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .16s var(--ease), box-shadow .26s var(--ease), transform .26s var(--ease)}
+.iconbtn:hover{background:var(--surface-deep);box-shadow:var(--shadow-rest);transform:translateY(-1px)}
+.iconbtn svg{width:20px;height:20px;stroke-width:1.75}
+
+/* ring */
+.ring{width:52px;height:52px;position:relative}
+.ring svg{transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:5.5;stroke-linecap:round}
+.ring .t{stroke:var(--surface-blush)}
+.ring .f{stroke:url(#rose);stroke-dasharray:138.2;stroke-dashoffset:86.4;animation:fill 1.4s var(--ease) .3s both}
+@keyframes fill{from{stroke-dashoffset:138.2}}
+.ring .n{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-display);font-weight:600;font-size:13px;color:var(--text)}
+
+/* timeline */
+.tlwrap{flex:1;overflow:hidden;margin-top:10px;position:relative}
+.timeline{display:flex;height:596px}
+.gutter{width:44px;flex:none;position:relative;font-family:var(--font-display);font-size:10.5px;font-weight:500;color:#B8A9AD}
+.gutter span{position:absolute;right:10px;transform:translateY(-50%)}
+.lane{flex:1;position:relative}
+
+.block{position:absolute;left:0;right:2px;border-radius:var(--r-md);padding:9px 13px;overflow:hidden;
+  background:var(--surface);box-shadow:var(--shadow-rest);
+  transition:box-shadow .26s var(--ease),transform .26s var(--ease)}
+.block .bt{font-family:var(--font-display);font-weight:600;font-size:14.5px;letter-spacing:-.005em}
+.block .bs{font-size:11.5px;color:var(--text-muted);margin-top:1px}
+.block .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+
+.block.soft{background:var(--surface-blush);box-shadow:none}
+.block.anchor{background:var(--surface-deep);box-shadow:none}
+.block.current{box-shadow:var(--shadow-lift);transform:translateY(-1px);z-index:2}
+.block.done{background:#F4F0EF;box-shadow:none}
+.block.done .bt,.block.done .bs{color:#B3A8AB}
+.block.done .bt{font-weight:500}
+.block.condensed{display:flex;align-items:center;padding:0 13px}
+.block .grab{position:absolute;bottom:2px;left:50%;transform:translateX(-50%);width:26px;height:3.5px;border-radius:2px;background:var(--line)}
+.block.current .grab{background:var(--accent-soft)}
+
+/* tags */
+.tag{display:inline-flex;align-items:center;gap:5px;font-family:var(--font-display);font-size:10px;font-weight:600;
+  padding:2.5px 9px;border-radius:var(--r-pill);letter-spacing:.02em}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+.tag.work{background:var(--surface-blush);color:var(--accent-strong)}
+.tag.side{background:#F6E6EA;color:#9E4F66}
+.tag.spanish{background:#F6E8DC;color:#9A7350}
+.tag.workout{background:#EDDDD3;color:#8A6F5E}
+.tag.easein{background:#FBF3F1;color:#C9A2AB}
+.tag.quiet{background:var(--bg);color:var(--text-muted)}
+.tag.doneTag{background:var(--ok-soft);color:#4C7156}
+.tag.anchored{background:rgba(255,255,255,.6);color:var(--accent-strong)}
+
+/* now marker */
+.now{position:absolute;left:-44px;right:0;z-index:3;pointer-events:none}
+.now .line{border-top:1.5px solid var(--accent-soft)}
+.now .nd{position:absolute;left:34px;top:-4.5px;width:9px;height:9px;border-radius:50%;background:var(--accent);
+  box-shadow:0 0 0 4px rgba(201,116,137,.15)}
+
+/* tab bar */
+.tabs{margin:0 -20px;background:var(--surface);box-shadow:0 -4px 20px rgba(178,95,118,.08);
+  display:flex;padding:10px 26px calc(14px + 12px);border-radius:28px 28px 0 0}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;color:#B8A9AD;
+  font-family:var(--font-display);font-size:10.5px;font-weight:600;cursor:pointer;padding:6px 0;border-radius:14px;
+  transition:color .16s var(--ease)}
+.tab svg{width:22px;height:22px;stroke-width:1.75}
+.tab.on{color:var(--accent-strong)}
+.tab.on .pillbg{background:var(--surface-blush);border-radius:var(--r-pill);padding:4px 18px;margin:-4px -18px 0}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition-duration:1ms!important}}
+</style>
+</head>
+<body>
+
+<div class="side">
+  <p class="eyebrow">Soft Start · Visual pass 01</p>
+  <h1>S1 — Today</h1>
+  <p>The anchor mockup. Everything Soft Focus promises, applied: porcelain canvas, borderless cards floating on rose-tinted shadows, blush tints for nesting, and one orchestrated moment — the ring filling on load.</p>
+  <p><b>Top stack:</b> Ephesis script wordmark (the app's only script, deep rose) → the day's quote in quiet Outfit caps-adjacent spacing → the intention in italic.</p>
+  <p><b>Block language:</b> white + shadow = flexible · blush = ease-in/protected · deeper blush = anchored · elevated = current · warm gray, no shadow = done (color literally drains from finished things).</p>
+  <p><b>Now marker:</b> a petal hairline with a small rose dot — present, never alarming.</p>
+  <p><b>Tabs:</b> sun / calendar / waves. The active tab sits in a blush pill.</p>
+</div>
+
+<div class="phone"><div class="screen">
+  <svg width="0" height="0"><defs><linearGradient id="rose" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#EFC3CC"/><stop offset="100%" stop-color="#C97489"/>
+  </linearGradient></defs></svg>
+
+  <div class="wordmark">Soft Start</div>
+  <div class="quote">Every day counts.</div>
+  <div class="intention">“Finish the dashboard draft” <b>— today's intention</b></div>
+
+  <div class="hdr">
+    <div>
+      <h2>Tuesday</h2>
+      <div class="sub">July 21</div>
+    </div>
+    <div class="hdr-actions">
+      <button class="iconbtn" aria-label="Add something">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+      </button>
+      <div class="ring" role="img" aria-label="3 of 8 done">
+        <svg width="52" height="52"><circle class="t" cx="26" cy="26" r="22"/><circle class="f" cx="26" cy="26" r="22"/></svg>
+        <div class="n">3/8</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tlwrap">
+    <div class="timeline">
+      <div class="gutter">
+        <span style="top:0%">8 AM</span><span style="top:22.2%">10</span><span style="top:44.4%">12 PM</span>
+        <span style="top:66.6%">2</span><span style="top:88.8%">4</span>
+      </div>
+      <div class="lane">
+        <!-- 8:00–17:00 · 1min ≈ 1.1px on a 596px lane -->
+        <div class="block soft done" style="top:0;height:62px">
+          <div class="row"><span class="bt">Ease in</span><span class="tag doneTag"><span class="dot"></span>done</span></div>
+          <div class="bs">8:00 – 9:00</div>
+        </div>
+        <div class="block done" style="top:68px;height:62px">
+          <div class="row"><span class="bt">Deep work</span><span class="tag doneTag"><span class="dot"></span>done</span></div>
+          <div class="bs">9:00 – 10:00</div>
+        </div>
+        <div class="block anchor done" style="top:136px;height:62px">
+          <div class="row"><span class="bt">Team meeting</span><span class="tag doneTag"><span class="dot"></span>done</span></div>
+          <div class="bs">10:00 – 11:00 · anchored</div>
+        </div>
+        <div class="block current" style="top:204px;height:96px">
+          <div class="row"><span class="bt">Client work</span><span class="tag work"><span class="dot"></span>Work</span></div>
+          <div class="bs">11:00 – 12:30</div>
+          <div class="grab"></div>
+        </div>
+        <div class="block soft" style="top:306px;height:62px">
+          <div class="row"><span class="bt">Lunch</span><span class="tag quiet">protected</span></div>
+          <div class="bs">12:30 – 1:30</div>
+        </div>
+        <div class="block" style="top:374px;height:46px">
+          <div class="row"><span class="bt">Spanish</span><span class="tag spanish"><span class="dot"></span>Spanish</span></div>
+          <div class="bs">1:30 – 2:15</div>
+          <div class="grab"></div>
+        </div>
+        <div class="block" style="top:428px;height:104px">
+          <div class="row"><span class="bt">Side project</span><span class="tag side"><span class="dot"></span>Side project</span></div>
+          <div class="bs">2:20 – 4:00</div>
+          <div class="grab"></div>
+        </div>
+        <div class="block" style="top:538px;height:58px">
+          <div class="row"><span class="bt">Workout</span><span class="tag workout"><span class="dot"></span>Workout</span></div>
+          <div class="bs">4:00 – 5:00</div>
+          <div class="grab"></div>
+        </div>
+        <div class="now" style="top:255px"><div class="line"></div><div class="nd"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="tabs">
+    <div class="tab on"><div class="pillbg">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6L17 7M7 17l-1.4 1.4"/></svg>
+    </div><span>Today</span></div>
+    <div class="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="15" rx="4"/><path d="M8 3v4M16 3v4M4 10h16"/></svg>
+      <span>Week</span></div>
+    <div class="tab">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 15c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3M3 21c2.5 0 2.5-3 5-3s2.5 3 5 3 2.5-3 5-3" transform="translate(0,-2)"/></svg>
+      <span>Rhythm</span></div>
+  </nav>
+</div></div>
+
+</body>
+</html>

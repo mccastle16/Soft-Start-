@@ -144,6 +144,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  padding-top: 10px;
   padding-bottom: 16px;
 }
 .ss-gutter {
@@ -181,10 +182,12 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: 14.5px;
+  line-height: 1.2;
   letter-spacing: -0.005em;
 }
 .ss-block-time {
   font-size: 11.5px;
+  line-height: 1.2;
   color: var(--text-muted);
   margin-top: 1px;
 }

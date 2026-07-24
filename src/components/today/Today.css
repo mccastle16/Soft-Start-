@@ -1,0 +1,343 @@
+/* ============================================================
+   S1 — Today
+   Styles lifted directly from docs/mockup-s1-today.html; class
+   names are prefixed ss- since BlockCard/CategoryTag/TabBar are
+   shared across future screens (Week, Rhythm).
+   ============================================================ */
+
+.ss-screen {
+  min-height: 100svh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 22px 20px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* top stack */
+.ss-wordmark {
+  font-family: var(--font-script);
+  color: var(--accent-strong);
+  text-align: center;
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.ss-wordmark--small { font-size: 30px; }
+.ss-wordmark--large { font-size: 48px; }
+
+.ss-quote {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.ss-intention {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 3px;
+}
+.ss-intention b {
+  color: var(--accent-strong);
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* header */
+.ss-hdr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 14px 0 4px;
+}
+.ss-hdr h2 {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 0.9;
+  color: var(--text);
+}
+.ss-hdr-sub {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  margin-top: 3px;
+  letter-spacing: 0.03em;
+}
+.ss-hdr-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ss-icon-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--surface-blush);
+  border: none;
+  color: var(--accent-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease), box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.ss-icon-btn:hover {
+  background: var(--surface-deep);
+  box-shadow: var(--shadow-rest);
+  transform: translateY(-1px);
+}
+.ss-icon-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke-width: 1.75;
+}
+
+/* progress ring */
+.ss-ring {
+  width: 52px;
+  height: 52px;
+  position: relative;
+}
+.ss-ring svg { transform: rotate(-90deg); }
+.ss-ring circle {
+  fill: none;
+  stroke-width: 5.5;
+  stroke-linecap: round;
+}
+.ss-ring-track { stroke: var(--surface-blush); }
+.ss-ring-fill {
+  animation: ss-ring-fill var(--t-slow) var(--ease) 0.3s both;
+}
+@keyframes ss-ring-fill {
+  from { stroke-dashoffset: 138.2; }
+}
+.ss-ring-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--text);
+}
+
+/* timeline */
+.ss-tlwrap {
+  flex: 1;
+  overflow: hidden;
+  margin-top: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.ss-timeline {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+.ss-gutter {
+  width: 44px;
+  flex: none;
+  position: relative;
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: #b8a9ad;
+}
+.ss-gutter span {
+  position: absolute;
+  right: 10px;
+  transform: translateY(-50%);
+}
+.ss-lane {
+  flex: 1;
+  position: relative;
+}
+
+/* block cards */
+.ss-block {
+  position: absolute;
+  left: 0;
+  right: 2px;
+  border-radius: var(--r-md);
+  padding: 9px 13px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: var(--shadow-rest);
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.ss-block-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  letter-spacing: -0.005em;
+}
+.ss-block-time {
+  font-size: 11.5px;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+.ss-block-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ss-block--soft { background: var(--surface-blush); box-shadow: none; }
+.ss-block--anchor { background: var(--surface-deep); box-shadow: none; }
+.ss-block--current { box-shadow: var(--shadow-lift); transform: translateY(-1px); z-index: 2; }
+.ss-block--done { background: #f4f0ef; box-shadow: none; }
+.ss-block--done .ss-block-title,
+.ss-block--done .ss-block-time { color: #b3a8ab; }
+.ss-block--done .ss-block-title { font-weight: 500; }
+.ss-block--condensed {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 13px;
+}
+.ss-block--condensed .ss-block-time { margin-top: 0; }
+
+.ss-grab {
+  position: absolute;
+  bottom: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 3.5px;
+  border-radius: 2px;
+  background: var(--line);
+}
+.ss-block--current .ss-grab { background: var(--accent-soft); }
+
+/* category / state tags */
+.ss-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2.5px 9px;
+  border-radius: var(--r-pill);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+.ss-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+.ss-tag--work { background: var(--surface-blush); color: var(--accent-strong); }
+.ss-tag--side { background: #f6e6ea; color: #9e4f66; }
+.ss-tag--spanish { background: #f6e8dc; color: #9a7350; }
+.ss-tag--workout { background: #eddcd3; color: #8a6f5e; }
+.ss-tag--easein { background: #fbf3f1; color: #c9a2ab; }
+.ss-tag--life { background: #f3eae6; color: #9b7a6e; }
+.ss-tag--other { background: var(--bg); color: var(--text-muted); }
+.ss-tag--quiet { background: var(--bg); color: var(--text-muted); }
+.ss-tag--done { background: var(--ok-soft); color: #4c7156; }
+.ss-tag--anchored { background: rgba(255, 255, 255, 0.6); color: var(--accent-strong); }
+
+/* now marker */
+.ss-now {
+  position: absolute;
+  left: -44px;
+  right: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.ss-now-line { border-top: 1.5px solid var(--accent-soft); }
+.ss-now-dot {
+  position: absolute;
+  left: 34px;
+  top: -4.5px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(201, 116, 137, 0.15);
+}
+
+/* open day (blank weekends, fully-rested weekdays) */
+.ss-open-day {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 10px;
+  border-radius: var(--r-lg);
+  background: linear-gradient(150deg, #fdf8f6, var(--surface-blush));
+}
+.ss-open-day-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 19px;
+  color: var(--text);
+}
+.ss-add-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 10px 20px;
+  cursor: pointer;
+  box-shadow: var(--shadow-rest);
+  transition: background var(--t-fast) var(--ease);
+}
+.ss-add-pill:hover { background: var(--accent-strong); }
+.ss-add-pill svg { width: 14px; height: 14px; stroke-width: 2.25; }
+
+/* tab bar */
+.ss-tabs {
+  margin: 0 -20px;
+  background: var(--surface);
+  box-shadow: 0 -4px 20px rgba(178, 95, 118, 0.08);
+  display: flex;
+  padding: 10px 26px calc(14px + 12px);
+  border-radius: 28px 28px 0 0;
+}
+.ss-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  color: #b8a9ad;
+  font-family: var(--font-display);
+  font-size: 10.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 6px 0;
+  border-radius: 14px;
+  transition: color var(--t-fast) var(--ease);
+}
+.ss-tab svg { width: 22px; height: 22px; stroke-width: 1.75; }
+.ss-tab--on { color: var(--accent-strong); }
+.ss-tab-icon {
+  display: flex;
+  border-radius: var(--r-pill);
+  padding: 4px 18px;
+  margin: -4px -18px 0;
+}
+.ss-tab--on .ss-tab-icon { background: var(--surface-blush); }

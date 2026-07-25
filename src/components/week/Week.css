@@ -1,0 +1,159 @@
+/* ============================================================
+   S2 — Week
+   Styles lifted directly from docs/mockup-week.html.
+   ============================================================ */
+
+.ss-week-hdr {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin: 10px 0 12px;
+}
+.ss-week-hdr h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 23px;
+  letter-spacing: -0.01em;
+}
+.ss-week-hdr-sub {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.03em;
+}
+
+.ss-week-list {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding-bottom: 16px;
+}
+
+.ss-day {
+  border-radius: var(--r-lg);
+  padding: 13px 16px;
+  background: var(--surface);
+  box-shadow: var(--shadow-rest);
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+}
+.ss-day--today {
+  box-shadow: var(--shadow-lift);
+}
+.ss-day--past {
+  background: var(--bg);
+  box-shadow: none;
+}
+.ss-day--past .ss-dayname {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.ss-day--weekend {
+  background: linear-gradient(150deg, #fdf8f6, var(--surface-blush));
+  box-shadow: none;
+}
+
+.ss-day-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.ss-day-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ss-dayname {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15.5px;
+}
+.ss-daydate {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-left: 7px;
+  font-weight: 400;
+}
+
+.ss-day-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2.5px 9px;
+  border-radius: var(--r-pill);
+  white-space: nowrap;
+}
+.ss-day-dot {
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.ss-day-tag--today {
+  background: var(--surface-blush);
+  color: var(--accent-strong);
+}
+.ss-day-tag--done {
+  background: var(--ok-soft);
+  color: #4c7156;
+}
+
+.ss-day-wkopen {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 5px;
+}
+.ss-day-doneline {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 8px;
+}
+
+/* mini block marks */
+.ss-week-marks {
+  display: flex;
+  gap: 4px;
+  margin-top: 9px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.ss-week-mk {
+  height: 8px;
+  border-radius: 4px;
+  flex: none;
+}
+.ss-week-mk--ease-in {
+  background: #f6e3e7;
+}
+.ss-week-mk--work {
+  background: var(--accent-soft);
+}
+.ss-week-mk--side {
+  background: #e2a5b6;
+}
+.ss-week-mk--spanish {
+  background: #f2e0d2;
+}
+.ss-week-mk--workout {
+  background: #e8d6cb;
+}
+.ss-week-mk--life {
+  background: #f3eae6;
+}
+.ss-week-mk--other {
+  background: var(--bg);
+}
+.ss-week-mk--done {
+  background: #dbd3d0;
+}
+.ss-week-mk--anchor {
+  background: var(--surface-deep);
+}
+.ss-week-mk--ring {
+  box-shadow: inset 0 0 0 1.5px #d9b6be;
+}

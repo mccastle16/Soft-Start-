@@ -1,3 +1,5 @@
+import type { Weekday } from './template';
+
 /**
  * The four day-shape values that are "fully user-owned" (PRD §6.1): the app
  * never adjusts, suggests, or learns new values on its own. Set once during
@@ -23,15 +25,31 @@ export const DEFAULT_DAY_SHAPE: DayShape = {
   dayEndMinute: 17 * 60,
 };
 
+/** S0's screen sequence — each maps to one Stepper segment (anchors/buildDay/repeatDay/offerNextDay share segments per the mockup's cumulative fill). */
+export type FirstRunStepId =
+  | 'welcome'
+  | 'dayShape'
+  | 'anchors'
+  | 'buildDay'
+  | 'repeatDay'
+  | 'offerNextDay'
+  | 'weekendsBackupDone';
+
 /** Singleton app settings row; always stored under id 'app'. */
 export interface AppSettings {
   id: 'app';
   dayShape: DayShape;
   hasCompletedFirstRun: boolean;
   /** Resume point for the abandon-and-resume first-run flow; absent once first run is complete. */
-  firstRunStep?: string;
+  firstRunStep?: FirstRunStepId;
+  /** The weekday `buildDay`/`repeatDay`/`offerNextDay` currently concern — absent for the steps that aren't per-weekday. */
+  firstRunWeekday?: Weekday;
+  /** Weekdays explicitly left blank via "Leave blank for now" — the build-and-echo loop skips these rather than re-offering them forever. */
+  firstRunSkippedWeekdays?: Weekday[];
   /** YYYY-MM-DD of the last date the morning ritual was completed for; drives the 4:00am day-boundary check. */
   lastRitualDate?: string;
+  /** Index into the Appendix A intention prompt set (0-based) last shown in R2 — tracked even when skipped, so the rotation never repeats within a week. */
+  lastIntentionPromptId?: number;
 }
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {

@@ -12,6 +12,15 @@ export function minuteToOffset(minute: number, dayStartMinute: number, scale: nu
 export const MIN_BLOCK_HEIGHT_PX = 44;
 
 /**
+ * The full (title row + category tag + time row) layout needs more room than
+ * the bare touch-target floor to show its time line without clipping —
+ * roughly 18px padding + 17px title row + 17px time row. Below this, the
+ * condensed one-line style takes over; it stays legible all the way down to
+ * MIN_BLOCK_HEIGHT_PX because it has no tag row to make space for.
+ */
+export const FULL_LAYOUT_MIN_HEIGHT_PX = 56;
+
+/**
  * The smallest scale that still gives the day's shortest block at least
  * MIN_BLOCK_HEIGHT_PX. Using max(available-space scale, this) means a short
  * browser window makes the day scroll rather than shrinking every block down
@@ -52,7 +61,7 @@ export function layoutBlocks(
     const proportionalTop = minuteToOffset(block.startMinute, dayStartMinute, scale);
     const top = Math.max(proportionalTop, lastBottom);
     const rawHeight = (block.endMinute - block.startMinute) * scale;
-    const condensed = rawHeight < MIN_BLOCK_HEIGHT_PX;
+    const condensed = rawHeight < FULL_LAYOUT_MIN_HEIGHT_PX;
     const height = Math.max(rawHeight, MIN_BLOCK_HEIGHT_PX);
     lastBottom = top + height;
     return { top, height, condensed };
@@ -80,7 +89,7 @@ export function formatHourLabel(minute: number, isFirst: boolean): string {
   return `${hour12}`;
 }
 
-function formatClock(minute: number): string {
+export function formatClock(minute: number): string {
   const normalized = ((minute % 1440) + 1440) % 1440;
   const hourOfDay = Math.floor(normalized / 60);
   const minuteOfHour = normalized % 60;
@@ -90,4 +99,14 @@ function formatClock(minute: number): string {
 
 export function formatTimeRange(startMinute: number, endMinute: number): string {
   return `${formatClock(startMinute)} – ${formatClock(endMinute)}`;
+}
+
+/** "6:30 PM" — used where a time stands alone without a block's implied context (e.g. the boundary note). */
+export function formatClockWithMeridiem(minute: number): string {
+  const normalized = ((minute % 1440) + 1440) % 1440;
+  const hourOfDay = Math.floor(normalized / 60);
+  const minuteOfHour = normalized % 60;
+  const hour12 = hourOfDay % 12 === 0 ? 12 : hourOfDay % 12;
+  const meridiem = hourOfDay < 12 ? 'AM' : 'PM';
+  return `${hour12}:${minuteOfHour.toString().padStart(2, '0')} ${meridiem}`;
 }

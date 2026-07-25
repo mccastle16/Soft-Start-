@@ -41,6 +41,10 @@ export function getDailyPlansInRange(startDate: string, endDate: string): Promis
   return db.dailyPlans.where('date').between(startDate, endDate, true, true).toArray();
 }
 
+export function getAllDailyPlans(): Promise<DailyPlan[]> {
+  return db.dailyPlans.toArray();
+}
+
 export function saveDailyPlan(plan: DailyPlan): Promise<string> {
   return db.dailyPlans.put(plan);
 }

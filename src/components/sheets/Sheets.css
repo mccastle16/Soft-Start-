@@ -1,0 +1,297 @@
+/* ============================================================
+   Sheets — SH1 (block) + SH2 (add)
+   Styles lifted directly from docs/mockup-sheets.html.
+   ============================================================ */
+
+.ss-sheet-host {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.ss-sheet-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(69, 58, 62, 0.28);
+  backdrop-filter: blur(1.5px);
+  animation: ss-sheet-scrim-in var(--t-med) var(--ease) both;
+}
+@keyframes ss-sheet-scrim-in {
+  from {
+    opacity: 0;
+  }
+}
+
+.ss-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  max-height: 88svh;
+  overflow-y: auto;
+  background: var(--surface);
+  border-radius: 28px 28px 0 0;
+  box-shadow: 0 -10px 40px rgba(178, 95, 118, 0.18);
+  padding: 14px 24px calc(24px + env(safe-area-inset-bottom, 0px));
+  animation: ss-sheet-in var(--t-med) var(--ease) both;
+}
+@keyframes ss-sheet-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+}
+
+@media (min-width: 640px) {
+  .ss-sheet-host {
+    align-items: center;
+  }
+  .ss-sheet {
+    border-radius: var(--r-lg);
+    max-height: 82svh;
+  }
+}
+
+.ss-sheet-handle {
+  width: 38px;
+  height: 4.5px;
+  border-radius: 3px;
+  background: var(--surface-deep);
+  margin: 0 auto 16px;
+}
+
+.ss-sheet-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+  gap: 10px;
+}
+.ss-sheet-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  letter-spacing: -0.01em;
+}
+
+/* time row */
+.ss-sheet-timerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  background: var(--surface-blush);
+  border: none;
+  border-radius: var(--r-md);
+  padding: 13px 16px;
+  margin: 14px 0 18px;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease);
+  font-family: var(--font-body);
+  color: var(--text);
+}
+.ss-sheet-timerow:hover {
+  background: var(--surface-deep);
+}
+.ss-sheet-timerow-t {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+}
+.ss-sheet-timerow-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.ss-sheet-timerow-hint svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 1.75;
+}
+
+/* action buttons */
+.ss-sheet-btn {
+  font-family: var(--font-display);
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  min-height: 48px;
+  border-radius: var(--r-md);
+  transition: background var(--t-fast) var(--ease), box-shadow var(--t-med) var(--ease),
+    transform var(--t-fast) var(--ease);
+}
+.ss-sheet-btn:active {
+  transform: scale(0.98);
+}
+.ss-sheet-btn--done {
+  width: 100%;
+  font-size: 15.5px;
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-rest);
+  padding: 14px;
+}
+.ss-sheet-btn--done:hover {
+  background: var(--accent-strong);
+  box-shadow: var(--shadow-lift);
+}
+.ss-sheet-btn--done:disabled {
+  background: var(--surface-deep);
+  color: var(--text-muted);
+  box-shadow: none;
+  cursor: default;
+}
+.ss-sheet-pair {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+.ss-sheet-btn--sec {
+  flex: 1;
+  font-size: 13.5px;
+  background: var(--surface-blush);
+  color: var(--accent-strong);
+  padding: 13px 8px;
+}
+.ss-sheet-btn--sec:hover {
+  background: var(--surface-deep);
+}
+.ss-sheet-btn--ghost {
+  display: block;
+  margin: 12px auto 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  background: none;
+  padding: 9px 16px;
+  min-height: auto;
+  border-radius: var(--r-sm);
+}
+.ss-sheet-btn--ghost:hover {
+  background: var(--surface-blush);
+  color: var(--text);
+}
+
+/* SH2 title field (and SH1's inline edit-title field) */
+.ss-sheet-field {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: 15px;
+  padding: 14px 16px;
+  margin: 12px 0 4px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--text);
+  transition: border-color var(--t-fast) var(--ease), box-shadow var(--t-fast) var(--ease);
+}
+.ss-sheet-field::placeholder {
+  color: #c4b6ba;
+}
+.ss-sheet-field:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(201, 116, 137, 0.12);
+}
+
+/* category + tier pills */
+.ss-sheet-cats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 12px 0 4px;
+}
+.ss-sheet-cat {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 15px;
+  border-radius: var(--r-pill);
+  background: var(--surface-blush);
+  color: var(--text-muted);
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--t-fast) var(--ease);
+}
+.ss-sheet-cat:hover {
+  background: var(--surface-deep);
+}
+.ss-sheet-cat--sel {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-rest);
+}
+
+/* rhythm toggle row */
+.ss-sheet-togglerow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 2px;
+  margin-top: 6px;
+}
+.ss-sheet-togglerow-lbl {
+  font-size: 13.5px;
+  color: var(--text-muted);
+}
+.ss-toggle {
+  width: 44px;
+  height: 26px;
+  border-radius: 99px;
+  background: var(--surface-deep);
+  position: relative;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  transition: background var(--t-fast) var(--ease);
+  flex: none;
+}
+.ss-toggle::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(69, 58, 62, 0.15);
+  transition: left var(--t-fast) var(--ease);
+}
+.ss-toggle--on {
+  background: var(--accent);
+}
+.ss-toggle--on::after {
+  left: 21px;
+}
+
+/* SH1's inline "Edit block" mini-editor */
+.ss-sheet-edit {
+  margin: 4px 0 18px;
+  padding-top: 4px;
+  border-top: 1px solid var(--line);
+}
+.ss-sheet-edit-label {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 14px;
+}
+.ss-sheet-edit-actions {
+  display: flex;
+  gap: 9px;
+  margin-top: 14px;
+}
+.ss-sheet-edit-actions .ss-sheet-btn--done {
+  flex: 1;
+}

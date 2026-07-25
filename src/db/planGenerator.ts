@@ -1,7 +1,7 @@
 import { nextGreetingQuoteId } from '../content/greetingQuotes';
-import { getWeekdayFromDate, previousDateString } from '../lib/dayBoundary';
-import type { DailyPlan, DayBlock } from '../types';
-import { getDailyPlan, getDayTemplate, getSettings, saveDailyPlan } from './repository';
+import { getWeekdayFromDate, nextDateString, previousDateString } from '../lib/dayBoundary';
+import type { DailyPlan, DayBlock, TemplateBlock, Weekday } from '../types';
+import { getDailyPlan, getDayTemplate, getSettings, saveDailyPlan, saveDayTemplate } from './repository';
 
 function toDayBlock(templateBlock: {
   id: string;
@@ -57,4 +57,93 @@ export async function getOrCreateDailyPlan(date: string, now: Date): Promise<Dai
 
   await saveDailyPlan(plan);
   return plan;
+}
+
+/**
+ * SH2's (and Week's day-targeted add's) persistence: get-or-create that
+ * date's plan, append the one-off block, and optionally widen its bounds
+ * (N2, already confirmed by the caller).
+ */
+export async function addOneOffBlockToDate(
+  date: string,
+  block: DayBlock,
+  newDayStartMinute?: number,
+  newDayEndMinute?: number,
+): Promise<void> {
+  const plan = await getOrCreateDailyPlan(date, new Date());
+  await saveDailyPlan({
+    ...plan,
+    blocks: [...plan.blocks, block],
+    dayStartMinute: newDayStartMinute ?? plan.dayStartMinute,
+    dayEndMinute: newDayEndMinute ?? plan.dayEndMinute,
+  });
+}
+
+/**
+ * SH1's "Move to tomorrow": inserts a one-off copy into tomorrow's plan
+ * (generating it from the template first if it doesn't exist yet). Dropped
+ * `templateBlockId` so the copy never gets confused with tomorrow's own
+ * regularly-generated instance of the same template block.
+ */
+export async function moveBlockToTomorrow(fromDate: string, block: DayBlock): Promise<void> {
+  const copy: DayBlock = {
+    ...block,
+    id: crypto.randomUUID(),
+    templateBlockId: undefined,
+    status: 'pending',
+    isOneOff: true,
+  };
+  await addOneOffBlockToDate(nextDateString(fromDate), copy);
+}
+
+/** Week's future-day preview: a read-only, never-persisted rendering of what the template would generate. */
+export function previewBlocksForTemplate(template: { blocks: TemplateBlock[] } | undefined): DayBlock[] {
+  return (template?.blocks ?? []).map(toDayBlock);
+}
+
+/**
+ * SH1/SH2's "Also add to my weekly rhythm": the sole, explicit path from a
+ * one-off block to a permanent one (edge case 26). Never happens implicitly.
+ */
+export async function addBlockToTemplate(weekday: Weekday, block: DayBlock): Promise<void> {
+  const template = (await getDayTemplate(weekday)) ?? { weekday, blocks: [] };
+  const templateBlock: TemplateBlock = {
+    id: crypto.randomUUID(),
+    title: block.title,
+    category: block.category,
+    tier: block.tier,
+    startMinute: block.startMinute,
+    endMinute: block.endMinute,
+    minDurationMinutes: block.minDurationMinutes,
+  };
+  await saveDayTemplate({ ...template, blocks: [...template.blocks, templateBlock] });
+}
+
+export interface AnchorDraft {
+  title: string;
+  category: DayBlock['category'];
+  weekdays: Weekday[];
+  startMinute: number;
+  endMinute: number;
+}
+
+/** S0.3's anchors: written straight into every weekday they apply to, ahead of that weekday ever being built. */
+export async function applyAnchorsToTemplates(anchors: AnchorDraft[]): Promise<void> {
+  const affectedWeekdays = [...new Set(anchors.flatMap((anchor) => anchor.weekdays))];
+  await Promise.all(
+    affectedWeekdays.map(async (weekday) => {
+      const template = (await getDayTemplate(weekday)) ?? { weekday, blocks: [] };
+      const newBlocks: TemplateBlock[] = anchors
+        .filter((anchor) => anchor.weekdays.includes(weekday))
+        .map((anchor) => ({
+          id: crypto.randomUUID(),
+          title: anchor.title,
+          category: anchor.category,
+          tier: 'anchored',
+          startMinute: anchor.startMinute,
+          endMinute: anchor.endMinute,
+        }));
+      await saveDayTemplate({ ...template, blocks: [...template.blocks, ...newBlocks] });
+    }),
+  );
 }

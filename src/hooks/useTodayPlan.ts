@@ -1,12 +1,15 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getOrCreateDailyPlan } from '../db/planGenerator';
-import { seedDatabase } from '../db/repository';
-import { seedExampleRhythm } from '../db/seedExampleRhythm';
+import { saveDailyPlan, seedDatabase } from '../db/repository';
 import { getLogicalDateString } from '../lib/dayBoundary';
 import type { DailyPlan } from '../types';
 
-/** Loads (generating on first access) today's plan per the 4:00am day boundary. */
-export function useTodayPlan(): DailyPlan | null {
+export type TodayPlanPatch = Partial<
+  Pick<DailyPlan, 'blocks' | 'dayStartMinute' | 'dayEndMinute' | 'intention' | 'ritualCompletedAt'>
+>;
+
+/** Loads (generating on first access) today's plan per the 4:00am day boundary, plus a setter that persists edits. */
+export function useTodayPlan(): [DailyPlan | null, (patch: TodayPlanPatch) => void] {
   const [plan, setPlan] = useState<DailyPlan | null>(null);
 
   useEffect(() => {
@@ -14,7 +17,6 @@ export function useTodayPlan(): DailyPlan | null {
 
     async function load() {
       await seedDatabase();
-      await seedExampleRhythm();
       const now = new Date();
       const date = getLogicalDateString(now);
       const dailyPlan = await getOrCreateDailyPlan(date, now);
@@ -27,5 +29,14 @@ export function useTodayPlan(): DailyPlan | null {
     };
   }, []);
 
-  return plan;
+  const updatePlan = useCallback((patch: TodayPlanPatch) => {
+    setPlan((prev) => {
+      if (!prev) return prev;
+      const next = { ...prev, ...patch };
+      void saveDailyPlan(next);
+      return next;
+    });
+  }, []);
+
+  return [plan, updatePlan];
 }

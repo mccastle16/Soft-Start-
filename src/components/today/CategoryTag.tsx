@@ -1,3 +1,4 @@
+import { CATEGORY_TAG_CLASS } from '../../lib/categoryStyle';
 import type { BlockCategory, BlockStatus, BlockTier } from '../../types';
 import { CATEGORY_LABELS } from '../../types';
 
@@ -6,16 +7,6 @@ interface CategoryTagProps {
   tier: BlockTier;
   status: BlockStatus;
 }
-
-const CATEGORY_TAG_CLASS: Record<BlockCategory, string> = {
-  'ease-in': 'easein',
-  work: 'work',
-  'side-project': 'side',
-  spanish: 'spanish',
-  workout: 'workout',
-  life: 'life',
-  other: 'other',
-};
 
 /**
  * Priority mirrors the design system's color-semantics law: done (sage) always

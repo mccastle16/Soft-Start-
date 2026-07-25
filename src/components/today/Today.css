@@ -98,6 +98,16 @@
   height: 20px;
   stroke-width: 1.75;
 }
+.ss-icon-btn--sm {
+  width: 30px;
+  height: 30px;
+  flex: none;
+}
+.ss-icon-btn--sm svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
+}
 
 /* progress ring */
 .ss-ring {
@@ -176,7 +186,21 @@
   overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-rest);
+  touch-action: none;
+  user-select: none;
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease), top var(--t-med) var(--ease),
+    height var(--t-med) var(--ease);
+}
+.ss-block--movable { cursor: grab; }
+.ss-block--dragging {
   transition: box-shadow var(--t-med) var(--ease), transform var(--t-med) var(--ease);
+  box-shadow: var(--shadow-lift);
+  z-index: 5;
+  cursor: grabbing;
+}
+/* the gentle-question tone leaking onto the block that caused it, per the interruptions mockup */
+.ss-block--warm {
+  box-shadow: 0 2px 4px rgba(69, 58, 62, 0.05), 0 8px 24px rgba(178, 95, 118, 0.2);
 }
 .ss-block-title {
   font-family: var(--font-display);
@@ -190,6 +214,20 @@
   line-height: 1.2;
   color: var(--text-muted);
   margin-top: 1px;
+}
+.ss-block-time--editable {
+  display: inline-block;
+  cursor: pointer;
+  touch-action: manipulation;
+  border-radius: var(--r-sm);
+  margin-left: -4px;
+  padding: 1px 4px;
+  transition: background var(--t-fast) var(--ease);
+}
+.ss-block-time--editable:hover,
+.ss-block-time--editable:focus-visible {
+  background: var(--surface-blush);
+  outline: none;
 }
 .ss-block-row {
   display: flex;
@@ -205,26 +243,49 @@
 .ss-block--done .ss-block-title,
 .ss-block--done .ss-block-time { color: #b3a8ab; }
 .ss-block--done .ss-block-title { font-weight: 500; }
+/* Even at the 44px floor, the time stays underneath the title — never dropped, just tightened. */
 .ss-block--condensed {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 0 13px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+  padding: 4px 13px;
 }
-.ss-block--condensed .ss-block-time { margin-top: 0; }
+.ss-block--condensed .ss-block-title {
+  font-size: 13px;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ss-block--condensed .ss-block-time {
+  font-size: 10.5px;
+  line-height: 1.15;
+  margin-top: 0;
+}
 
 .ss-grab {
   position: absolute;
-  bottom: 2px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16px;
+  cursor: grab;
+  touch-action: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 2px;
+}
+.ss-grab:active { cursor: grabbing; }
+.ss-grab::after {
+  content: '';
   width: 26px;
   height: 3.5px;
   border-radius: 2px;
   background: var(--line);
 }
-.ss-block--current .ss-grab { background: var(--accent-soft); }
+.ss-block--current .ss-grab::after { background: var(--accent-soft); }
 
 /* category / state tags */
 .ss-tag {
@@ -270,6 +331,138 @@
   border-radius: 50%;
   background: var(--accent);
   box-shadow: 0 0 0 4px rgba(201, 116, 137, 0.15);
+}
+
+/* inline notes — N1 (overlap) & N2 (boundary): the app's only question voice */
+.ss-note {
+  position: absolute;
+  left: 0;
+  right: 2px;
+  z-index: 6;
+  background: #f7e3e7;
+  border-radius: var(--r-md);
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  box-shadow: var(--shadow-rest);
+  animation: ss-note-in var(--t-med) var(--ease) both;
+}
+@keyframes ss-note-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+.ss-note--inline {
+  position: static;
+  right: auto;
+  margin-top: 12px;
+}
+.ss-note-txt {
+  font-size: 13px;
+  color: #8f4f63;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+.ss-note-txt b {
+  color: #7c3e52;
+  font-weight: 700;
+}
+.ss-note-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  flex: none;
+  margin-top: 5px;
+}
+.ss-note-btns {
+  display: flex;
+  gap: 9px;
+  align-items: center;
+}
+.ss-note-btn {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #8f4f63;
+  background: rgba(255, 255, 255, 0.82);
+  border: none;
+  border-radius: var(--r-pill);
+  padding: 8px 15px;
+  min-height: 32px;
+  cursor: pointer;
+  transition: background var(--t-fast) var(--ease);
+}
+.ss-note-btn:hover { background: #fff; }
+.ss-note-btn-ghost {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 500;
+  color: #b58a99;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 6px;
+  min-height: 32px;
+}
+
+/* tap-to-edit-time popover */
+.ss-time-edit {
+  position: absolute;
+  left: 0;
+  right: 2px;
+  z-index: 6;
+  background: var(--surface);
+  border-radius: var(--r-md);
+  padding: 12px 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  box-shadow: var(--shadow-lift);
+  animation: ss-note-in var(--t-med) var(--ease) both;
+}
+.ss-time-edit--inline {
+  position: static;
+  right: auto;
+  margin-top: 12px;
+  box-shadow: var(--shadow-rest);
+}
+.ss-time-edit-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.ss-time-edit-input {
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface-blush);
+  border: none;
+  border-radius: var(--r-sm);
+  padding: 7px 9px;
+  flex: 1;
+  min-height: 36px;
+}
+.ss-time-edit-input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+.ss-time-edit-sep {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+.ss-time-edit-error {
+  font-size: 12px;
+  color: var(--note);
+}
+.ss-time-edit-btns {
+  display: flex;
+  gap: 9px;
+  align-items: center;
 }
 
 /* open day (blank weekends, fully-rested weekdays) */

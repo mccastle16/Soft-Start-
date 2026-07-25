@@ -5,7 +5,7 @@ import { getLogicalDateString } from '../lib/dayBoundary';
 import type { DailyPlan } from '../types';
 
 export type TodayPlanPatch = Partial<
-  Pick<DailyPlan, 'blocks' | 'dayStartMinute' | 'dayEndMinute' | 'intention' | 'ritualCompletedAt'>
+  Pick<DailyPlan, 'blocks' | 'dayStartMinute' | 'dayEndMinute' | 'intention' | 'ritualCompletedAt' | 'celebrationShown'>
 >;
 
 /** Loads (generating on first access) today's plan per the 4:00am day boundary, plus a setter that persists edits. */

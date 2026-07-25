@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Today.css';
 import '../sheets/Sheets.css';
+import '../closing/Closing.css';
 import { GREETING_QUOTES } from '../../content/greetingQuotes';
 import { addBlockToTemplate, moveBlockToTomorrow } from '../../db/planGenerator';
 import { useNowMinute } from '../../hooks/useNowMinute';
@@ -9,6 +10,7 @@ import { WEEKDAY_LABELS } from '../../lib/weekdayLabels';
 import type { DailyPlan, DayBlock } from '../../types';
 import { AddSheet } from '../sheets/AddSheet';
 import { BlockSheet } from '../sheets/BlockSheet';
+import { EveningView } from '../closing/EveningView';
 import { AppWordmark } from './AppWordmark';
 import { activeBlocks } from './blockEdits';
 import { IconButton } from './IconButton';
@@ -65,6 +67,32 @@ export function TodayScreen({ plan, updatePlan, onNavigate }: TodayScreenProps) 
 
   const sheetBlock =
     openSheet?.kind === 'block' ? visibleBlocks.find((block) => block.id === openSheet.blockId) : undefined;
+
+  // Evening/after (Flow 6a): once the day's actual end has passed, Today closes quietly — only what
+  // was done, always a warm line. Checked before the open-day state so a day that's simply over never
+  // reads as an invitation to add more to it.
+  const isEveningState = nowMinute !== undefined && nowMinute >= plan.dayEndMinute;
+
+  if (isEveningState) {
+    const doneBlocks = visibleBlocks.filter((block) => block.status === 'done');
+    const isComplete = visibleBlocks.length > 0 && doneBlocks.length === visibleBlocks.length;
+
+    return (
+      <div className="ss-screen">
+        <AppWordmark />
+        <QuoteLine quote={GREETING_QUOTES[plan.greetingQuoteId]} />
+        <IntentionLine intention={plan.intention} />
+        <EveningView
+          weekdayLabel={weekdayLabel}
+          doneBlocks={doneBlocks}
+          isComplete={isComplete}
+          celebrationShown={plan.celebrationShown ?? false}
+          onCelebrationShown={() => updatePlan({ celebrationShown: true })}
+        />
+        <TabBar active="today" onSelect={onNavigate} />
+      </div>
+    );
+  }
 
   return (
     <div className="ss-screen">

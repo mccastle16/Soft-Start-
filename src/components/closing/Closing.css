@@ -1,0 +1,107 @@
+/* ============================================================
+   Closing States — evening view, warm close, 100%-day celebration
+   Styles lifted directly from docs/mockup-closing.html.
+   ============================================================ */
+
+.ss-evening-dayname {
+  font-family: var(--font-script);
+  font-size: 40px;
+  line-height: 0.9;
+  color: var(--text);
+  margin: 12px 0 2px;
+}
+
+.ss-showedup {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 21px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  margin: 20px 0 18px;
+  line-height: 1.35;
+}
+
+.ss-donecard {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  background: var(--surface);
+  border-radius: var(--r-md);
+  box-shadow: var(--shadow-rest);
+  padding: 13px 15px;
+  margin-bottom: 9px;
+}
+.ss-donecard--slim {
+  padding: 9px 13px;
+  margin-bottom: 7px;
+}
+.ss-donecard-check {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--ok-soft);
+  color: #4c7156;
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ss-donecard--slim .ss-donecard-check {
+  width: 21px;
+  height: 21px;
+}
+.ss-donecard-check svg {
+  width: 13px;
+  height: 13px;
+  stroke-width: 2.5;
+}
+.ss-donecard-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14.5px;
+  color: #a79b9e;
+}
+.ss-donecard--slim .ss-donecard-title {
+  font-size: 13.5px;
+}
+
+.ss-warmline {
+  font-size: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 18px;
+  line-height: 1.6;
+}
+.ss-celebline {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  text-align: center;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+  margin-top: 24px;
+}
+
+/* the one celebration */
+.ss-petal-field {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.ss-petal {
+  position: absolute;
+  top: -24px;
+  border-radius: 50% 50% 50% 0;
+  opacity: 0.85;
+  animation-name: ss-petal-fall;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+@keyframes ss-petal-fall {
+  to {
+    transform: translateY(900px) rotate(340deg);
+    opacity: 0;
+  }
+}

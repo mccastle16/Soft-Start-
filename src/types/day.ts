@@ -29,5 +29,7 @@ export interface DailyPlan {
   greetingQuoteId: number;
   /** ISO timestamp the morning ritual (greeting + intention) completed; absent until it does. */
   ritualCompletedAt?: string;
+  /** Whether the 100%-day petal celebration has already played — fires once per day (edge case 20), not on every evening-view visit. */
+  celebrationShown?: boolean;
   createdAt: string;
 }

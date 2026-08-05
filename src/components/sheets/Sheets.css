@@ -295,3 +295,14 @@
 .ss-sheet-edit-actions .ss-sheet-btn--done {
   flex: 1;
 }
+
+/* SH5 — day peek */
+.ss-daypeek-empty {
+  font-size: 13.5px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 18px 0 10px;
+}
+.ss-sheet .ss-donecard:first-of-type {
+  margin-top: 14px;
+}

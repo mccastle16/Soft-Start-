@@ -15,6 +15,11 @@
   position: relative;
 }
 
+/* reserves room for the fixed .ss-tabs bar — only screens that render it need this */
+.ss-screen--tabbed {
+  padding-bottom: 100px;
+}
+
 /* top stack */
 .ss-wordmark {
   font-family: var(--font-script);
@@ -25,6 +30,26 @@
 }
 .ss-wordmark--small { font-size: 30px; }
 .ss-wordmark--large { font-size: 48px; }
+
+.ss-back-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  align-self: flex-start;
+  min-height: 44px;
+  padding: 0 6px 0 0;
+  margin: 2px 0 0 -6px;
+  background: none;
+  border: none;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.ss-back-row svg {
+  width: 22px;
+  height: 22px;
+}
 
 .ss-quote {
   font-family: var(--font-display);
@@ -505,14 +530,20 @@
 .ss-add-pill:hover { background: var(--accent-strong); }
 .ss-add-pill svg { width: 14px; height: 14px; stroke-width: 2.25; }
 
-/* tab bar */
+/* tab bar — fixed to the viewport so it never drifts with content length (e.g. an empty day) */
 .ss-tabs {
-  margin: 0 -20px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-width: 480px;
+  margin: 0 auto;
   background: var(--surface);
   box-shadow: 0 -4px 20px rgba(178, 95, 118, 0.08);
   display: flex;
   padding: 10px 26px calc(14px + 12px);
   border-radius: 28px 28px 0 0;
+  z-index: 15;
 }
 .ss-tab {
   flex: 1;

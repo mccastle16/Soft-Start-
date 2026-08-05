@@ -1,0 +1,146 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-04T00:00:00.000Z",
+  "title": "Design System: Soft Start",
+  "extensions": {
+    "colorMeta": {
+      "rose": {
+        "role": "primary",
+        "displayName": "Rose",
+        "canonical": "#C97489",
+        "tonalRamp": ["#5C2735", "#7A3548", "#98455C", "#B25F76", "#C97489", "#DE96A6", "#EFC3CC", "#FBEDF0"]
+      },
+      "sage": {
+        "role": "secondary",
+        "displayName": "Sage",
+        "canonical": "#6F9678",
+        "tonalRamp": ["#2E3D30", "#405543", "#547058", "#6F9678", "#8AAE8F", "#ABC7AE", "#CFE1CF", "#E4EFE6"]
+      },
+      "apricot": {
+        "role": "secondary",
+        "displayName": "Apricot",
+        "canonical": "#C08A52",
+        "tonalRamp": ["#5A3D1E", "#7A5329", "#9A6C3B", "#C08A52", "#D0A470", "#E0BE94", "#EFD8BB", "#F8ECDF"]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#453A3E",
+        "tonalRamp": ["#2A2224", "#453A3E", "#6B5B60", "#8B7B80", "#B8A9AD", "#D9CBCC", "#F3E2E4", "#FCFAF9"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Page titles only." },
+      "headline": { "displayName": "Headline", "purpose": "Section titles, e.g. \"Your week so far\"." },
+      "title": { "displayName": "Title", "purpose": "Card titles." },
+      "body": { "displayName": "Body", "purpose": "Paragraph copy, capped near 62ch." },
+      "label": { "displayName": "Label", "purpose": "Captions, tags, eyebrows, button text." },
+      "script": { "displayName": "Script", "purpose": "Ephesis — wordmark, day-of-week heading, morning greeting only. No fourth use." }
+    },
+    "shadows": [
+      { "name": "rest", "value": "0 1px 2px rgba(69,58,62,.04), 0 4px 16px rgba(178,95,118,.07)", "purpose": "Default state of every card, block, and button." },
+      { "name": "lift", "value": "0 2px 4px rgba(69,58,62,.05), 0 10px 28px rgba(178,95,118,.12)", "purpose": "Hover, drag, and current/next timeline block." },
+      { "name": "inner", "value": "inset 0 1px 3px rgba(69,58,62,.06)", "purpose": "Pressed / inset contexts." }
+    ],
+    "motion": [
+      { "name": "ease", "value": "cubic-bezier(.25,.6,.3,1)", "purpose": "Default easing for every transition; soft decelerating glide, no bounce or elastic." },
+      { "name": "duration-fast", "value": "160ms", "purpose": "Color/background changes, presses." },
+      { "name": "duration-med", "value": "260ms", "purpose": "Hover lifts, shadow transitions, sheet-in." },
+      { "name": "duration-slow", "value": "420ms", "purpose": "Progress-ring fill, panel reveals, arrival float." }
+    ],
+    "breakpoints": [
+      { "name": "sheet-to-dialog", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action per screen; rose fill, white text.",
+      "html": "<button class=\"ds-btn-primary\">Save changes</button>",
+      "css": ".ds-btn-primary { font-family: var(--font-display); font-size: 15.5px; font-weight: 600; color: #fff; background: var(--accent); border: none; border-radius: var(--r-md); padding: 14px 22px; min-height: 48px; cursor: pointer; box-shadow: var(--shadow-rest); transition: background 160ms var(--ease), box-shadow 260ms var(--ease), transform 160ms var(--ease); } .ds-btn-primary:hover { background: var(--accent-strong); box-shadow: var(--shadow-lift); } .ds-btn-primary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; } .ds-btn-primary:active { transform: scale(0.98); }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting action beside a primary button; blush fill.",
+      "html": "<button class=\"ds-btn-secondary\">Add a note</button>",
+      "css": ".ds-btn-secondary { font-family: var(--font-display); font-size: 13.5px; font-weight: 600; color: var(--accent-strong); background: var(--surface-blush); border: none; border-radius: var(--r-md); padding: 13px 16px; min-height: 44px; cursor: pointer; transition: background 160ms var(--ease); } .ds-btn-secondary:hover { background: var(--surface-deep); } .ds-btn-secondary:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Dismissals and \"later\" paths; skipping is always quiet and guilt-free.",
+      "html": "<button class=\"ds-btn-ghost\">Maybe later</button>",
+      "css": ".ds-btn-ghost { font-family: var(--font-display); font-size: 13.5px; font-weight: 500; color: var(--text-muted); background: none; border: none; padding: 10px 18px; border-radius: var(--r-md); cursor: pointer; min-height: 44px; transition: background 160ms var(--ease), color 160ms var(--ease); } .ds-btn-ghost:hover { background: var(--surface-blush); color: var(--text); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }"
+    },
+    {
+      "name": "Timeline Block Card",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Signature component: a flexible/protected timeline block at rest, height mapped to duration.",
+      "html": "<div class=\"ds-block\"><div class=\"ds-block-row\"><span class=\"ds-block-title\">Morning meditation</span></div><div class=\"ds-block-time\">8:00 – 8:15am</div></div>",
+      "css": ".ds-block { background: var(--surface); border-radius: var(--r-md); box-shadow: var(--shadow-rest); padding: 9px 13px; } .ds-block-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; } .ds-block-title { font-family: var(--font-display); font-weight: 600; font-size: 14.5px; line-height: 1.2; } .ds-block-time { font-size: 11.5px; color: var(--text-muted); margin-top: 1px; }"
+    },
+    {
+      "name": "Category Tag",
+      "kind": "chip",
+      "refersTo": null,
+      "description": "Small pill in a category-specific rose/cream tint; every category gets equal visual dignity.",
+      "html": "<span class=\"ds-tag\"><span class=\"ds-tag-dot\"></span>Spanish</span>",
+      "css": ".ds-tag { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-display); font-size: 10px; font-weight: 600; padding: 2.5px 9px; border-radius: var(--r-pill); letter-spacing: 0.02em; background: #f6e8dc; color: #9a7350; } .ds-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }"
+    },
+    {
+      "name": "Question Note",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature component: the app's only \"attention\" voice — overlap nudge and boundary confirmation.",
+      "html": "<div class=\"ds-note\"><div class=\"ds-note-txt\">These two overlap — want me to nudge one?</div><div class=\"ds-note-btns\"><button class=\"ds-note-btn\">Nudge it</button><button class=\"ds-note-btn-ghost\">Leave it</button></div></div>",
+      "css": ".ds-note { background: #f7e3e7; border-radius: var(--r-md); padding: 12px 15px; display: flex; flex-direction: column; gap: 9px; box-shadow: var(--shadow-rest); } .ds-note-txt { font-size: 13px; color: #8f4f63; } .ds-note-btns { display: flex; gap: 9px; align-items: center; } .ds-note-btn { font-family: var(--font-display); font-size: 12.5px; font-weight: 600; color: #8f4f63; background: rgba(255,255,255,.82); border: none; border-radius: var(--r-pill); padding: 8px 15px; min-height: 32px; cursor: pointer; transition: background 160ms var(--ease); } .ds-note-btn:hover { background: #fff; } .ds-note-btn-ghost { font-family: var(--font-display); font-size: 12px; font-weight: 500; color: #b58a99; background: none; border: none; cursor: pointer; padding: 8px 6px; min-height: 32px; }"
+    },
+    {
+      "name": "Progress Ring",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "Signature component: additive-only progress, petal-to-rose gradient fill, fills once on change.",
+      "html": "<div class=\"ds-ring\"><svg viewBox=\"0 0 92 92\" role=\"img\" aria-label=\"3 of 5 steps complete\"><defs><linearGradient id=\"ds-rose-grad\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\"><stop offset=\"0%\" stop-color=\"#EFC3CC\"/><stop offset=\"100%\" stop-color=\"#C97489\"/></linearGradient></defs><circle class=\"ds-ring-track\" cx=\"46\" cy=\"46\" r=\"38\"/><circle class=\"ds-ring-fill\" cx=\"46\" cy=\"46\" r=\"38\" stroke-dasharray=\"238.8\" stroke-dashoffset=\"95.5\"/><text x=\"46\" y=\"51\" text-anchor=\"middle\" class=\"ds-ring-text\">3/5</text></svg></div>",
+      "css": ".ds-ring { width: 92px; height: 92px; } .ds-ring circle { fill: none; stroke-width: 9; stroke-linecap: round; } .ds-ring-track { stroke: var(--surface-blush); } .ds-ring-fill { stroke: url(#ds-rose-grad); transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dashoffset 420ms var(--ease); } .ds-ring-text { font-family: var(--font-display); font-weight: 600; font-size: 19px; fill: var(--text); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Gentle Morning in a Porcelain Room",
+    "overview": "Soft Start lives in a warm, unhurried material world: a porcelain-toned room where nothing casts a hard shadow, and one rose-lit morning moment a day is allowed to glow. The palette is a single rose-and-cream family stretched across almost the whole interface — porcelain and white for the room itself, blush tints for anything nested inside it, and a warm rose-brown ink instead of black. The only saturated departures are deliberate and narrow: sage means done and nothing else, apricot means the app has a gentle question and nothing else, and a soft rose gradient field is reserved for the single arrival moment each morning. Everything else stays quiet by design — this is a system for someone who is already disciplined and just needs the negotiation removed, so the interface never argues, alarms, or scores.\n\nDepth comes entirely from tinted shadow blooms and blush-tint layering, never from borders or outlines — corners are generous everywhere and hairlines appear only inside tables and dividers. Motion is calm and singular: one orchestrated moment per screen (the arrival's rose-field fade and float-dock, the progress ring's fill, the once-a-day petal drift), plus quiet hover/press micro-interactions, with every transition collapsing to near-instant under prefers-reduced-motion.\n\nConfirmed rejections: no red anywhere, no borders for depth, no badges or streak-shaming, no countdown or urgency language, no gamification currency, no comparison of today's plan against an \"original.\" A day begun late is optimized, never mourned — the visual system's calmness is a direct expression of that product stance, not decoration on top of it.",
+    "keyCharacteristics": [
+      "Warm porcelain and white rooms; rose-brown ink instead of black",
+      "Depth via rose-tinted shadow blooms + blush-tint nesting — never borders, never shadow-on-shadow",
+      "Ephesis script reserved for exactly three moments: wordmark, day-of-week heading, morning greeting",
+      "Sage = done, apricot = gentle question, deep blush = the question's field — each color has exactly one job",
+      "One orchestrated motion moment per screen; everything eases out, nothing bounces or loops"
+    ],
+    "rules": [
+      { "name": "The No-Red Rule", "body": "Red never appears anywhere in the product. Apricot carries all \"gentle attention\" duty; sage carries all \"completion\" duty. Neither ever borrows the other's job.", "section": "colors" },
+      { "name": "The Deep-Blush Question Rule", "body": "The #F7E3E7 field / #8F4F63 text pairing renders only when the app is gently asking the user something — the overlap nudge, the boundary-crossing confirmation. It never appears as decoration or as a third \"info\" color.", "section": "colors" },
+      { "name": "The Equal-Dignity Rule", "body": "All seven block categories render in matched-saturation members of the same rose+cream family. No category reads as more important than another.", "section": "colors" },
+      { "name": "The Three-Places Rule", "body": "Ephesis script renders in exactly three places — the wordmark, the day-of-week heading, and the morning greeting. Never a fourth.", "section": "typography" },
+      { "name": "The Tint-Not-Stack Rule", "body": "Nested cards and chips gain depth from a blush background fill, never from a second layer of shadow.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do derive every color, size, radius, and duration from the tokens above.",
+      "Do add whitespace before reaching for a divider, and a divider before ever reaching for a border.",
+      "Do give every empty state (blank weekend, fully-rested day) an inviting, additive message plus a one-tap way to add something.",
+      "Do keep one primary button and one signature motion moment per screen.",
+      "Do write button labels as concrete verbs and outcomes in sentence case (\"Save changes\", not \"Submit\")."
+    ],
+    "donts": [
+      "Don't use red, exclamation marks, or countdowns anywhere — the single approved exception is \"Wow! What a day.\" on a 100%-complete evening, which fires at most once per day.",
+      "Don't show negative counts (\"3 missed\", \"2 overdue\") — always reframe as progress made, never as a deficit.",
+      "Don't stack shadows on nested surfaces — nest with a blush tint instead.",
+      "Don't let apricot or deep-blush drift into decorative use; both are reserved entirely for the app's gentle-question moments.",
+      "Don't render Ephesis script anywhere outside the wordmark, the day-of-week heading, and the morning greeting.",
+      "Don't animate more than one orchestrated moment per screen, and always provide a prefers-reduced-motion fallback."
+    ]
+  }
+}

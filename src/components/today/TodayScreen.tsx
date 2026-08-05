@@ -16,7 +16,7 @@ import { activeBlocks } from './blockEdits';
 import { IconButton } from './IconButton';
 import { IntentionLine } from './IntentionLine';
 import { OpenDayState } from './OpenDayState';
-import { PlusIcon } from './icons';
+import { ChevronLeftIcon, PlusIcon } from './icons';
 import { ProgressRing } from './ProgressRing';
 import { QuoteLine } from './QuoteLine';
 import { ScreenHeader } from './ScreenHeader';
@@ -32,11 +32,15 @@ interface TodayScreenProps {
   plan: DailyPlan;
   updatePlan: (patch: TodayPlanPatch) => void;
   onNavigate: (tab: TabKey) => void;
+  /** Which tab reads as active in the bar — 'week' when this is a day drilled into from Week. Defaults to 'today'. */
+  activeTab?: TabKey;
+  /** Present only when this screen was opened from elsewhere (e.g. Week) — renders a way back that doesn't change tabs. */
+  onBack?: () => void;
 }
 
 type OpenSheet = { kind: 'block'; blockId: string } | { kind: 'add' } | null;
 
-export function TodayScreen({ plan, updatePlan, onNavigate }: TodayScreenProps) {
+export function TodayScreen({ plan, updatePlan, onNavigate, activeTab = 'today', onBack }: TodayScreenProps) {
   const nowMinute = useNowMinute(plan.date);
   const [openSheet, setOpenSheet] = useState<OpenSheet>(null);
 
@@ -78,8 +82,14 @@ export function TodayScreen({ plan, updatePlan, onNavigate }: TodayScreenProps) 
     const isComplete = visibleBlocks.length > 0 && doneBlocks.length === visibleBlocks.length;
 
     return (
-      <div className="ss-screen">
+      <div className="ss-screen ss-screen--tabbed">
         <AppWordmark />
+        {onBack && (
+          <button type="button" className="ss-back-row" onClick={onBack}>
+            <ChevronLeftIcon />
+            <span>Week</span>
+          </button>
+        )}
         <QuoteLine quote={GREETING_QUOTES[plan.greetingQuoteId]} />
         <IntentionLine intention={plan.intention} />
         <EveningView
@@ -89,14 +99,20 @@ export function TodayScreen({ plan, updatePlan, onNavigate }: TodayScreenProps) 
           celebrationShown={plan.celebrationShown ?? false}
           onCelebrationShown={() => updatePlan({ celebrationShown: true })}
         />
-        <TabBar active="today" onSelect={onNavigate} />
+        <TabBar active={activeTab} onSelect={onNavigate} />
       </div>
     );
   }
 
   return (
-    <div className="ss-screen">
+    <div className="ss-screen ss-screen--tabbed">
       <AppWordmark />
+      {onBack && (
+        <button type="button" className="ss-back-row" onClick={onBack}>
+          <ChevronLeftIcon />
+          <span>Week</span>
+        </button>
+      )}
       <QuoteLine quote={GREETING_QUOTES[plan.greetingQuoteId]} />
       <IntentionLine intention={plan.intention} />
 
@@ -126,7 +142,7 @@ export function TodayScreen({ plan, updatePlan, onNavigate }: TodayScreenProps) 
         </div>
       )}
 
-      <TabBar active="today" onSelect={onNavigate} />
+      <TabBar active={activeTab} onSelect={onNavigate} />
 
       {sheetBlock && (
         <BlockSheet

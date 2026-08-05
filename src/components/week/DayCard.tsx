@@ -15,17 +15,18 @@ interface DayCardProps {
   blocks: DayBlock[];
   temperature: DayTemperature;
   onAdd: () => void;
+  onOpen: () => void;
 }
 
 /** S2's four card temperatures: past (recedes, sage-only), today (shadow-lift + blush tag), future (rose-and-cream preview), weekend-open (blush gradient invite). */
-export function DayCard({ date, weekday, blocks, temperature, onAdd }: DayCardProps) {
+export function DayCard({ date, weekday, blocks, temperature, onAdd, onOpen }: DayCardProps) {
   const weekdayLabel = WEEKDAY_LABELS[weekday];
   const visible = activeBlocks(blocks);
   const isWeekend = weekday === 'saturday' || weekday === 'sunday';
 
   if (temperature !== 'past' && isWeekend && visible.length === 0) {
     return (
-      <div className="ss-day ss-day--weekend">
+      <div className="ss-day ss-day--weekend" onClick={onOpen} role="button" tabIndex={0}>
         <div className="ss-day-row">
           <span className="ss-dayname">
             {weekdayLabel}
@@ -39,7 +40,9 @@ export function DayCard({ date, weekday, blocks, temperature, onAdd }: DayCardPr
           )}
         </div>
         <div className="ss-day-wkopen">Wide open.</div>
-        <AddPill onClick={onAdd} />
+        <div onClick={(e) => e.stopPropagation()}>
+          <AddPill onClick={onAdd} />
+        </div>
       </div>
     );
   }
@@ -47,7 +50,7 @@ export function DayCard({ date, weekday, blocks, temperature, onAdd }: DayCardPr
   if (temperature === 'past') {
     const doneBlocks = visible.filter((block) => block.status === 'done');
     return (
-      <div className="ss-day ss-day--past">
+      <div className="ss-day ss-day--past" onClick={onOpen} role="button" tabIndex={0}>
         <div className="ss-day-row">
           <span className="ss-dayname">
             {weekdayLabel}
@@ -73,7 +76,7 @@ export function DayCard({ date, weekday, blocks, temperature, onAdd }: DayCardPr
   const doneCount = visible.filter((block) => block.status === 'done').length;
 
   return (
-    <div className={`ss-day ${temperature === 'today' ? 'ss-day--today' : ''}`.trim()}>
+    <div className={`ss-day ${temperature === 'today' ? 'ss-day--today' : ''}`.trim()} onClick={onOpen} role="button" tabIndex={0}>
       <div className="ss-day-row">
         <span className="ss-dayname">
           {weekdayLabel}
@@ -86,7 +89,9 @@ export function DayCard({ date, weekday, blocks, temperature, onAdd }: DayCardPr
               Today · {doneCount}/{visible.length}
             </span>
           )}
-          <IconButton label={`Add to ${weekdayLabel}`} icon={<PlusIcon />} size="sm" onClick={onAdd} />
+          <span onClick={(e) => e.stopPropagation()}>
+            <IconButton label={`Add to ${weekdayLabel}`} icon={<PlusIcon />} size="sm" onClick={onAdd} />
+          </span>
         </span>
       </div>
       <MiniBlockMarks blocks={visible} />

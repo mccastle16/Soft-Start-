@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrivalFlow } from "./components/arrival/ArrivalFlow";
 import { FirstRunFlow } from "./components/firstrun/FirstRunFlow";
+import { RhythmScreen } from "./components/rhythm/RhythmScreen";
 import type { TabKey } from "./components/today/TabBar";
 import { TodayScreen } from "./components/today/TodayScreen";
 import { WeekScreen } from "./components/week/WeekScreen";
@@ -52,12 +53,15 @@ function DailyApp() {
   }
 
   function handleNavigate(tab: TabKey) {
-    // Rhythm (S3) isn't built yet — the tab stays inert until then.
-    if (tab === 'today' || tab === 'week') setActiveTab(tab);
+    setActiveTab(tab);
   }
 
   if (activeTab === 'week') {
     return <WeekScreen onNavigate={handleNavigate} />;
+  }
+
+  if (activeTab === 'rhythm') {
+    return <RhythmScreen onNavigate={handleNavigate} />;
   }
 
   return <TodayScreen plan={plan} updatePlan={updatePlan} onNavigate={handleNavigate} />;

@@ -68,12 +68,15 @@
   padding: 15px 17px;
   margin-bottom: 10px;
   cursor: pointer;
-  transition: box-shadow var(--t-med) var(--ease);
+  transition: box-shadow var(--t-med) var(--ease), transform var(--t-fast) var(--ease);
   font-family: var(--font-body);
   color: var(--text);
 }
 .ss-setrow:hover {
   box-shadow: var(--shadow-lift);
+}
+.ss-setrow:active:not(.ss-setrow--blank) {
+  transform: scale(0.98);
 }
 .ss-setrow-lbl {
   font-size: 14px;

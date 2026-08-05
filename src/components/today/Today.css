@@ -45,6 +45,11 @@
   font-size: 13px;
   font-weight: 600;
   color: var(--text-muted);
+  cursor: pointer;
+  transition: opacity var(--t-fast) var(--ease);
+}
+.ss-back-row:active {
+  opacity: 0.55;
 }
 .ss-back-row svg {
   width: 22px;

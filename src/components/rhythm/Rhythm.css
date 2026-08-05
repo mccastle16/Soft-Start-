@@ -1,0 +1,108 @@
+/* ============================================================
+   S3 — Rhythm
+   Layout for the settings/template home; row and button styles
+   are shared with FirstRun.css (S0.2's SettingsRow) and Sheets.css.
+   Lifted from docs/soft-start-wireframes.html §7.
+   ============================================================ */
+
+/* Push-navigation continuity: Rhythm's home ↔ weekday/dayShape/backup swap
+   was a hard cut. Sub-screens enter as if pushed in from the right; home
+   re-enters as if arriving back from the left — same relationship in every
+   direction, without tracking real nav history. */
+.ss-rhythm-enter {
+  animation: ss-rhythm-in var(--t-med) var(--ease) both;
+}
+@keyframes ss-rhythm-in {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+.ss-rhythm-enter--back {
+  animation-name: ss-rhythm-in-back;
+}
+@keyframes ss-rhythm-in-back {
+  from {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+}
+
+.ss-rhythm-hdr {
+  margin: 10px 0 4px;
+}
+.ss-rhythm-hdr h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 23px;
+  letter-spacing: -0.01em;
+}
+
+.ss-rhythm-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 16px;
+}
+
+.ss-rhythm-section {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 18px 2px 8px;
+}
+.ss-rhythm-section:first-child {
+  margin-top: 4px;
+}
+
+/* S3.1's footer — Duplicate this day… / Done */
+.ss-rhythm-footer {
+  display: flex;
+  gap: 10px;
+  margin: 12px 0 4px;
+}
+.ss-rhythm-footer-btn {
+  flex: 1;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 13.5px;
+  border: none;
+  cursor: pointer;
+  border-radius: var(--r-md);
+  padding: 13px 8px;
+  background: var(--surface-blush);
+  color: var(--accent-strong);
+  transition: background var(--t-fast) var(--ease), box-shadow var(--t-med) var(--ease), transform var(--t-fast) var(--ease);
+}
+.ss-rhythm-footer-btn:hover {
+  background: var(--surface-deep);
+}
+.ss-rhythm-footer-btn:active {
+  transform: scale(0.98);
+}
+.ss-rhythm-footer-btn--primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: var(--shadow-rest);
+}
+.ss-rhythm-footer-btn--primary:hover {
+  background: var(--accent-strong);
+  box-shadow: var(--shadow-lift);
+}
+
+.ss-rhythm-import-error {
+  animation: ss-note-in var(--t-med) var(--ease) both;
+}
+
+/* S3.3's export/import actions */
+.ss-rhythm-backup-btn {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.ss-rhythm-file-input {
+  display: none;
+}

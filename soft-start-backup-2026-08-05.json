@@ -1,0 +1,525 @@
+{
+  "exportedAt": "2026-08-05T20:28:48.854Z",
+  "settings": {
+    "id": "app",
+    "dayShape": {
+      "dayStartMinute": 540,
+      "activeStartMinute": 600,
+      "lunchStartMinute": 720,
+      "lunchDurationMinutes": 90,
+      "dayEndMinute": 1020
+    },
+    "hasCompletedFirstRun": true,
+    "lastIntentionPromptId": 1,
+    "lastRitualDate": "2026-08-05",
+    "templateEditsSinceBackup": 1
+  },
+  "templates": [
+    {
+      "weekday": "friday",
+      "blocks": [
+        {
+          "id": "e4736a71-b004-491f-a281-ec2768284a7c",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540
+        },
+        {
+          "id": "54364104-5bf0-40d8-8a5e-034763cf6f57",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30
+        },
+        {
+          "id": "e5421f4a-5a60-4261-96c2-21daa91ce796",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "7c31a820-6195-44af-9bd3-72b2be64fdb7",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "93401736-5c89-4dfd-a703-18b8b42fb15b",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15
+        }
+      ]
+    },
+    {
+      "weekday": "monday",
+      "blocks": [
+        {
+          "id": "25a0c06d-608f-45f2-832d-75312e1ff90d",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540
+        },
+        {
+          "id": "65a2d3ef-09a2-4dcd-a1f7-cb265d6e23c8",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30
+        },
+        {
+          "id": "feaccd95-a634-4581-b4db-7c99cf338e5e",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "5f1934d5-fa2d-4168-b389-f05a71b45501",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "47e42e6d-2b04-4398-9ffb-350ceabb483b",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15
+        }
+      ]
+    },
+    {
+      "weekday": "saturday",
+      "blocks": []
+    },
+    {
+      "weekday": "sunday",
+      "blocks": []
+    },
+    {
+      "weekday": "thursday",
+      "blocks": [
+        {
+          "id": "a6e9f7bf-2bf6-4182-a985-ddf99210d704",
+          "title": "Meeting",
+          "category": "work",
+          "tier": "anchored",
+          "startMinute": 600,
+          "endMinute": 660
+        },
+        {
+          "id": "0fd74dc8-d428-4ced-9df7-72e0b6ca2e18",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540
+        },
+        {
+          "id": "53fc1498-4f47-409f-8379-fbabf833c905",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30
+        },
+        {
+          "id": "c93787bc-fe82-4618-a715-9b6d1b75b255",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "df045e88-8745-46a7-973f-e309b3a1d075",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "18c6fd22-72ae-40e6-b812-440ef73a5ad7",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15
+        }
+      ]
+    },
+    {
+      "weekday": "tuesday",
+      "blocks": [
+        {
+          "id": "6d80b949-90a0-4c85-a6f3-eefbf4902a6f",
+          "title": "Meeting",
+          "category": "work",
+          "tier": "anchored",
+          "startMinute": 600,
+          "endMinute": 660
+        },
+        {
+          "id": "1c340e0b-f511-4c22-824a-9fa549b8192a",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540
+        },
+        {
+          "id": "455a4ce0-658e-44da-a957-184cb297b76b",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30
+        },
+        {
+          "id": "2c41e204-4d5b-4f60-be99-75288f2bcf4e",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "eb88646d-23a7-4c23-b9fd-955cc941b89b",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "ab41dcae-855c-4084-aad4-9a65173cc846",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15
+        }
+      ]
+    },
+    {
+      "weekday": "wednesday",
+      "blocks": [
+        {
+          "id": "9bef2f41-4046-466a-aa22-914fa91a376d",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540
+        },
+        {
+          "id": "66913ef4-a001-44be-a9e1-c65d5e6598a8",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30
+        },
+        {
+          "id": "068e3c15-6a6e-4772-9625-74314ab70e67",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "4229c7ba-9fe0-49d1-984a-4c50e3f947ae",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15
+        },
+        {
+          "id": "4ac2d480-26d1-4445-abb2-8edb39577301",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15
+        }
+      ]
+    }
+  ],
+  "dailyPlans": [
+    {
+      "date": "2026-08-04",
+      "weekday": "tuesday",
+      "blocks": [
+        {
+          "id": "fc545ccd-59ae-4817-b0d6-87dd0d095c55",
+          "templateBlockId": "6d80b949-90a0-4c85-a6f3-eefbf4902a6f",
+          "title": "Meeting",
+          "category": "work",
+          "tier": "anchored",
+          "startMinute": 600,
+          "endMinute": 660,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "a8391228-4c40-4e19-8831-4a9cb2422be1",
+          "templateBlockId": "1c340e0b-f511-4c22-824a-9fa549b8192a",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "cb1cebae-8e08-462b-97a6-db9514a21f81",
+          "templateBlockId": "455a4ce0-658e-44da-a957-184cb297b76b",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 750,
+          "endMinute": 810,
+          "minDurationMinutes": 30,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "7bcf455a-828b-423e-a9d1-34b0fd6e81c5",
+          "templateBlockId": "2c41e204-4d5b-4f60-be99-75288f2bcf4e",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "dbcb9afa-6a69-409b-bbc6-eb5dfa8ef1a0",
+          "templateBlockId": "eb88646d-23a7-4c23-b9fd-955cc941b89b",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "c02733cb-d897-448d-b63a-85e23f6dc271",
+          "templateBlockId": "ab41dcae-855c-4084-aad4-9a65173cc846",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 815,
+          "endMinute": 1020,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        }
+      ],
+      "dayStartMinute": 480,
+      "dayEndMinute": 1020,
+      "greetingQuoteId": 0,
+      "createdAt": "2026-08-05T00:38:39.008Z",
+      "intention": {
+        "promptId": 0,
+        "answer": ":)))))))"
+      },
+      "ritualCompletedAt": "2026-08-05T00:38:51.865Z"
+    },
+    {
+      "date": "2026-08-05",
+      "weekday": "wednesday",
+      "blocks": [
+        {
+          "id": "8e4c9020-9856-4380-ad87-8dbb390ad44d",
+          "templateBlockId": "9bef2f41-4046-466a-aa22-914fa91a376d",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "08cd17f2-3213-4782-b670-aa74299cc74d",
+          "templateBlockId": "66913ef4-a001-44be-a9e1-c65d5e6598a8",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 720,
+          "endMinute": 780,
+          "minDurationMinutes": 30,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "a5bb59e7-59a7-45e0-9d7b-8ee5b7882ce1",
+          "templateBlockId": "068e3c15-6a6e-4772-9625-74314ab70e67",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15,
+          "status": "done",
+          "isOneOff": false
+        },
+        {
+          "id": "f37acbbb-8fde-455d-8f21-518842180216",
+          "templateBlockId": "4229c7ba-9fe0-49d1-984a-4c50e3f947ae",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 720,
+          "minDurationMinutes": 15,
+          "status": "done",
+          "isOneOff": false
+        },
+        {
+          "id": "905e9749-a0b8-4308-a27e-b2a8438aa4d2",
+          "templateBlockId": "4ac2d480-26d1-4445-abb2-8edb39577301",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 780,
+          "endMinute": 985,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        }
+      ],
+      "dayStartMinute": 480,
+      "dayEndMinute": 1020,
+      "greetingQuoteId": 1,
+      "createdAt": "2026-08-05T19:51:16.370Z",
+      "ritualCompletedAt": "2026-08-05T19:51:25.459Z"
+    },
+    {
+      "date": "2026-08-06",
+      "weekday": "thursday",
+      "blocks": [
+        {
+          "id": "b6b1df83-15e5-4d47-830a-731e2b8c75bb",
+          "templateBlockId": "a6e9f7bf-2bf6-4182-a985-ddf99210d704",
+          "title": "Meeting",
+          "category": "work",
+          "tier": "anchored",
+          "startMinute": 600,
+          "endMinute": 660,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "c5c85dcc-e19b-4036-8059-b528e6374a2b",
+          "templateBlockId": "0fd74dc8-d428-4ced-9df7-72e0b6ca2e18",
+          "title": "Ease in",
+          "category": "ease-in",
+          "tier": "protected",
+          "startMinute": 480,
+          "endMinute": 540,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "87c36e52-925c-4540-ba28-85a9ca7ca2ba",
+          "templateBlockId": "53fc1498-4f47-409f-8379-fbabf833c905",
+          "title": "Lunch",
+          "category": "life",
+          "tier": "protected",
+          "startMinute": 925,
+          "endMinute": 985,
+          "minDurationMinutes": 30,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "178f92c8-223e-42db-9626-b65e5f1d1b45",
+          "templateBlockId": "c93787bc-fe82-4618-a715-9b6d1b75b255",
+          "title": "Work",
+          "category": "work",
+          "tier": "flexible",
+          "startMinute": 540,
+          "endMinute": 660,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "fe8a2b15-90bd-4816-9d2d-aafa1d35a5bd",
+          "templateBlockId": "df045e88-8745-46a7-973f-e309b3a1d075",
+          "title": "Gym",
+          "category": "workout",
+          "tier": "flexible",
+          "startMinute": 865,
+          "endMinute": 925,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        },
+        {
+          "id": "5d4bd198-3eca-4bbc-8b8b-74fe77a176b6",
+          "templateBlockId": "18c6fd22-72ae-40e6-b812-440ef73a5ad7",
+          "title": "Side Project",
+          "category": "other",
+          "tier": "flexible",
+          "startMinute": 660,
+          "endMinute": 865,
+          "minDurationMinutes": 15,
+          "status": "pending",
+          "isOneOff": false
+        }
+      ],
+      "dayStartMinute": 540,
+      "dayEndMinute": 1020,
+      "greetingQuoteId": 2,
+      "createdAt": "2026-08-05T20:27:44.992Z"
+    }
+  ]
+}

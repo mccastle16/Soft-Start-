@@ -50,10 +50,13 @@ export interface AppSettings {
   lastRitualDate?: string;
   /** Index into the Appendix A intention prompt set (0-based) last shown in R2 — tracked even when skipped, so the rotation never repeats within a week. */
   lastIntentionPromptId?: number;
+  /** Counts template edits since the last export/import — crossing a threshold surfaces N3, the backup whisper (edge case 18), in Rhythm → Data & backup. */
+  templateEditsSinceBackup?: number;
 }
 
 export const DEFAULT_APP_SETTINGS: AppSettings = {
   id: 'app',
   dayShape: DEFAULT_DAY_SHAPE,
   hasCompletedFirstRun: false,
+  templateEditsSinceBackup: 0,
 };

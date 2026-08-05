@@ -60,3 +60,9 @@ export async function updateSettings(patch: Partial<Omit<AppSettings, 'id'>>): P
   await db.settings.put(next);
   return next;
 }
+
+/** Marks a template edit toward N3's backup whisper (edge case 18) — called whenever Rhythm actually changes a weekday's template. */
+export async function incrementTemplateEditsSinceBackup(): Promise<void> {
+  const current = await getSettings();
+  await updateSettings({ templateEditsSinceBackup: (current.templateEditsSinceBackup ?? 0) + 1 });
+}

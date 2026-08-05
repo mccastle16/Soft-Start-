@@ -61,6 +61,10 @@ export function TodayScreen({ plan, updatePlan, onNavigate, activeTab = 'today',
     updatePlan({ blocks: plan.blocks.map((b) => (b.id === blockId ? { ...b, status: 'resting' } : b)) });
   }
 
+  function handleDeleteBlock(blockId: string) {
+    updatePlan({ blocks: plan.blocks.filter((b) => b.id !== blockId) });
+  }
+
   function handleAddBlock(block: DayBlock, newDayStartMinute?: number, newDayEndMinute?: number) {
     updatePlan({
       blocks: [...plan.blocks, block],
@@ -155,6 +159,7 @@ export function TodayScreen({ plan, updatePlan, onNavigate, activeTab = 'today',
           onMoveToTomorrow={handleMoveToTomorrow}
           onRestToday={handleRestToday}
           onAddToRhythm={handleAddToRhythm}
+          onDelete={handleDeleteBlock}
         />
       )}
       {openSheet?.kind === 'add' && (

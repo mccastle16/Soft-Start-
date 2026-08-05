@@ -22,6 +22,7 @@ interface BlockSheetProps {
   onMoveToTomorrow: (block: DayBlock) => void;
   onRestToday: (blockId: string) => void;
   onAddToRhythm: (block: DayBlock) => void;
+  onDelete: (blockId: string) => void;
 }
 
 type PendingNote =
@@ -32,7 +33,8 @@ type PendingNote =
       newDayStartMinute?: number;
       newDayEndMinute?: number;
       thenOverlapNeighborId?: string;
-    };
+    }
+  | { kind: 'delete' };
 
 const TIER_LABELS: Record<BlockTier, string> = { anchored: 'Anchored', protected: 'Protected', flexible: 'Flexible' };
 const TIERS: readonly BlockTier[] = ['flexible', 'protected', 'anchored'];
@@ -48,6 +50,7 @@ export function BlockSheet({
   onMoveToTomorrow,
   onRestToday,
   onAddToRhythm,
+  onDelete,
 }: BlockSheetProps) {
   const [editingTime, setEditingTime] = useState(false);
   const [pendingNote, setPendingNote] = useState<PendingNote | null>(null);
@@ -73,6 +76,11 @@ export function BlockSheet({
 
   function handleRest() {
     onRestToday(block.id);
+    onClose();
+  }
+
+  function handleDeleteConfirm() {
+    onDelete(block.id);
     onClose();
   }
 
@@ -177,6 +185,19 @@ export function BlockSheet({
           onSecondary={() => setPendingNote(null)}
         />
       )}
+      {pendingNote?.kind === 'delete' && (
+        <InlineNote
+          message={
+            <>
+              <b>Delete this?</b> It won't appear on today's plan anymore.
+            </>
+          }
+          primaryLabel="Delete"
+          onPrimary={handleDeleteConfirm}
+          secondaryLabel="Keep it"
+          onSecondary={() => setPendingNote(null)}
+        />
+      )}
 
       <ActionRow
         primaryLabel={isDone ? 'Undo done' : 'Done'}
@@ -188,6 +209,16 @@ export function BlockSheet({
         ghostLabel={editingFields ? undefined : 'Edit block · title, category, tier'}
         onGhost={editingFields ? undefined : () => setEditingFields(true)}
       />
+
+      {block.isOneOff && !editingFields && (
+        <button
+          type="button"
+          className="ss-sheet-btn ss-sheet-btn--ghost"
+          onClick={() => setPendingNote({ kind: 'delete' })}
+        >
+          Delete
+        </button>
+      )}
 
       {editingFields && (
         <div className="ss-sheet-edit">
